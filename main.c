@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+<<<<<<< HEAD
 int selection(int t[], int len_t){
     int i,j,c,mini;
     for (i=0;i<len_t;i++){
@@ -30,4 +31,10 @@ int selection(int t[], int len_t){
 int main(){
     int tab[7] = {25,13,2,14,36,15,1};
     selection(tab,7);
+=======
+int main(){
+
+printf("hello");
+return 0;
+>>>>>>> 8fe4321017da2d7bd37fdefd29289d79eab483b8
 }
