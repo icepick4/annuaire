@@ -36,5 +36,5 @@ int main(){
 
 printf("hello");
 return 0;
->>>>>>> 8fe4321017da2d7bd37fdefd29289d79eab483b8
+//ok
 }
