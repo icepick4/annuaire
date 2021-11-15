@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define TAILLE_MAX 256
-int insertion(int t[],int len_t);
+int insertion(int t[],int len_t); /*initialisation de la fonction d'algorithme de tri*/
 int insertion (int t[],int len_t){
     int i,h,c;
     for(i=1;i<len_t;i++){
