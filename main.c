@@ -18,6 +18,7 @@ int insertion (int t[],int len_t){
     return t;
 }
 int main(){
+<<<<<<< HEAD
     int tab[7] = {25,13,2,14,36,15,1};
 <<<<<<< HEAD
     selection(tab,7);
@@ -28,6 +29,9 @@ printf("hello");
 return 0;
 //ok
 =======
+=======
+    int tab[7] = {25,13,2,14,36,15,1};/* initialisation du tableau de valeurs*/
+>>>>>>> 076e891145c856970b9b25b0c1fa7f43c83c2384
     insertion(tab,(sizeof tab / sizeof tab[0]));
     return 0;
 >>>>>>> 0e0d91a34a176f747df092a9b408e4526f747841
