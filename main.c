@@ -7,7 +7,6 @@ int main(){
     insertion(tab,(sizeof tab / sizeof tab[0]));
     return 0;
 }
-/*ceci est un commentaire sd*/
 void insertion (int t[],int len_t){
     int i,h,c;
     for(i=1;i<len_t;i++){
@@ -20,6 +19,5 @@ void insertion (int t[],int len_t){
     }
     for (h = 0; h < len_t; h++) {
       printf("\ntableau[%d] = %d", h, t[h]);
-   }/*
-    return t;*/
+   }
 }
