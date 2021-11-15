@@ -22,3 +22,4 @@ int main(){
     insertion(tab,(sizeof tab / sizeof tab[0]));
     return 0;
 }
+/*ceci est un commentaire sd*/
