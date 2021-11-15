@@ -18,7 +18,7 @@ int insertion (int t[],int len_t){
     return t;
 }
 int main(){
-    int tab[7] = {25,13,2,14,36,15,1};
+    int tab[7] = {25,13,2,14,36,15,1};/* initialisation du tableau de valeurs*/
     insertion(tab,(sizeof tab / sizeof tab[0]));
     return 0;
 }
