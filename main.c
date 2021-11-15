@@ -1,40 +1,24 @@
 #include <stdio.h>
-
-<<<<<<< HEAD
-int selection(int t[], int len_t){
-    int i,j,c,mini;
-    for (i=0;i<len_t;i++){
-        printf("itération %d",i);
-        mini=i;
-        for (j=0;i+1<len_t;j++){
-            if (t[j]<t[mini]){
-                mini=j;
-            }
+#include <stdlib.h>
+#define TAILLE_MAX 256
+int insertion(int t[],int len_t);
+int insertion (int t[],int len_t){
+    int i,h,c;
+    for(i=1;i<len_t;i++){
+        while((i>0) && (t[i]<t[i-1])){
+            c=t[i];
+            t[i]=t[i-1];
+            t[i-1]=c;
+            i=i-1;
         }
-        c = t[i];
-        t[i]=t[mini];
-        t[mini]=c;
-
-    int h;
+    }
     for (h = 0; h < len_t; h++) {
-      printf("\ntableau[%d] = %d", h, t[i]);
+      printf("\ntableau[%d] = %d", h, t[h]);
    }
-/*def Insertion(t,n):
-    for i in range(1,n):
-        while (i>0)and(t[i]<t[i-1]):
-            c = t[i]
-            t[i] = t[i-1]
-            t[i-1] = c
-            i = i-1
-    return t*/
-}}
+    return t;
+}
 int main(){
     int tab[7] = {25,13,2,14,36,15,1};
-    selection(tab,7);
-=======
-int main(){
-
-printf("hello");
-return 0;
->>>>>>> 8fe4321017da2d7bd37fdefd29289d79eab483b8
+    insertion(tab,(sizeof tab / sizeof tab[0]));
+    return 0;
 }
