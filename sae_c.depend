@@ -2,7 +2,23 @@
 1636533305 source:c:\users\nabil\onedrive\bureau\cours\langage c\sae c\sae c\main.c
 	<stdio.h>
 
-1637009475 source:c:\users\nabil\onedrive\bureau\cours\langage c\sae c\sae-c\main.c
+1637263784 source:c:\users\nabil\onedrive\bureau\cours\langage c\sae c\sae-c\main.c
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
+	"fonction.c"
+
+1637263887 c:\users\nabil\onedrive\bureau\cours\langage c\sae c\sae-c\fonction.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"fonction.h"
+
+1637264001 c:\users\nabil\onedrive\bureau\cours\langage c\sae c\sae-c\fonction.h
+
+1637232964 source:c:\users\nabil\onedrive\bureau\cours\langage c\sae c\sae-c\fonction.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"fonction.h"
 

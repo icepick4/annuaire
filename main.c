@@ -7,7 +7,6 @@
 int main(){
     int tab[7] = {25,13,2,14,36,15,1};/* initialisation du tableau de valeurs*/
     /*insertion(tab,(sizeof tab / sizeof tab[0]));*/
-    int numeros[10] = {0,1,3,4,6,7,9,10,12,13};
     char choix[TAILLE_MAX+1],nom[TAILLE_MAX+1],prenom[TAILLE_MAX+1],adresse[TAILLE_MAX+1],code_postale[TAILLE_MAX+1],num[TAILLE_MAX+1],mail[TAILLE_MAX+1],profession[TAILLE_MAX+1];
     printf("Choisi une action à réaliser : Ajout de client (\"ajout\"), Afficher la base de données (\"afficher\"), Supprimer un client (\"suppr\")");
     scanf("%s",&choix);
