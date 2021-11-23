@@ -8,7 +8,7 @@ void main(){
     int tab[7] = {25,13,2,14,36,15,1};/* initialisation du tableau de valeurs*/
     /*insertion(tab,(sizeof tab / sizeof tab[0]));*/
     char choix[TAILLE_MAX+1],choix_tri[TAILLE_MAX+1],choix_affiche[TAILLE_MAX+1], choixchoix_filtre[TAILLE_MAX+1],choix_filtre[TAILLE_MAX+1],filtre[TAILLE_MAX+1],nom[TAILLE_MAX+1],prenom[TAILLE_MAX+1],adresse[TAILLE_MAX+1],code_postale[TAILLE_MAX+1],num[TAILLE_MAX+1],mail[TAILLE_MAX+1],profession[TAILLE_MAX+1];
-    debut : printf("\nChoisis une action a realiser : \n  - Ajout de client --> tapez \"ajout\" \n  - Afficher la base de donnees --> tapez \"afficher\" \n  - Supprimer un client --> tapez \"suppr\"\n  - Rechercher un client --> tapez \"recherche\"\n");
+    debut : printf("\nChoisis une action a realiser : \n  - Ajout de client --> tapez \"ajout\" \n  - Afficher la base de donnees --> tapez \"afficher\" \n  - Supprimer un client --> tapez \"suppr\"\n  - Rechercher un client --> tapez \"recherche\"\n  - Afficher tous les clients auquels il manque un ou plusieurs champ(s) --> tapez \"manquant\" \n ");
     scanf("%s",&choix);
     if (strcmp(choix, "afficher")==0){
         /*ajouter le tri*/
@@ -163,6 +163,10 @@ void main(){
             printf("\nErreur dans la selection\n");
             goto scan_critere;
         }
+    }
+    else if (strcmp(choix,"manquant")==0){
+        afficher("manquant");
+        goto debut;
     }
     else{
         goto debut;
