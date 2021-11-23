@@ -51,7 +51,7 @@ void remplir_ligne(char*line, sclient *client,int id){
     client->deleted = strlen(tab[7]) > 0 ? "ok" : "ok";
 }
 
-void remplir(int modifier, int supprimer,int supprligne){
+void remplir(int modifier, int supprimer){
     FILE *fichier= fopen(chemin,"a+");
     int i=0;
     if (modifier == 0 && supprimer == 0){
@@ -120,12 +120,79 @@ void ajout(char *nom, char *prenom, char *adresse, char *code_postale, char *num
     tableau[i].deleted = "ok";
 }
 void afficher(char *choix_tri){
-    int i=0;
-    while(tableau[i].prenom=!NULL)
+    int j,i;
+    for (j=0;tableau[j].prenom!=NULL;){
+        j++;
+    }
+    for (i=0;i<j;i++)
     {
-        i++;
-        if (strcmp(tableau[i].deleted,"ok")==0){
-        printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+
+            if (strcmp(tableau[i].deleted,"ok")==0){
+            printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+            }
+    }
+}
+void filtrer(char *choix_filtre,char *filtre,char *choixchoix_filtre){
+    int j,i;
+    for (j=0;tableau[j].prenom!=NULL;){
+        j++;
+    }
+    for (i=0;i<j;i++)
+    {
+
+        if (strcmp(choixchoix_filtre,"non")==0){
+            if (strcmp(choix_filtre,"prenom")==0){
+                if(strcmp(tableau[i].prenom,filtre)==0){
+                    if (strcmp(tableau[i].deleted,"ok")==0){
+                    printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            else if (strcmp(choix_filtre,"nom")==0){
+                if(strcmp(tableau[i].nom,filtre)==0){
+                    if (strcmp(tableau[i].deleted,"ok")==0){
+                    printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            else if (strcmp(choix_filtre,"profession")==0){
+                if(strcmp(tableau[i].profession,filtre)==0){
+                    if (strcmp(tableau[i].deleted,"ok")==0){
+                    printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            else if (strcmp(choix_filtre,"code_postale")==0){
+                if(strcmp(tableau[i].code_postale,filtre)==0){
+                    if (strcmp(tableau[i].deleted,"ok")==0){
+                    printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+        }
+        else{
+            if (strcmp(choix_filtre,"prenom")==0){
+                if(strcmp(tableau[i].prenom[0],filtre)==0){
+                    printf("OUI");
+                    if (strcmp(tableau[i].deleted,"ok")==0){
+                    printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            else if (strcmp(choix_filtre,"nom")==0){
+                if(strcmp(tableau[i].nom[0],filtre)==0){
+                    if (strcmp(tableau[i].deleted,"ok")==0){
+                    printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            else if (strcmp(choix_filtre,"profession")==0){
+                if(strcmp(tableau[i].profession[0],filtre)==0){
+                    if (strcmp(tableau[i].deleted,"ok")==0){
+                    printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
         }
     }
 }
