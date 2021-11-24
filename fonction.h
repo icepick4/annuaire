@@ -12,7 +12,7 @@ void ajout();
 void afficher(char *choix_tri);
 void filtrer(char *choix_filtre,char *filtre,char * choixchoix_filtre);
 int suppr(int supprligne);
-int trouver (char * scanprenom,char * scannom,char * scannum, char *scanmail,int checksuppr);
+int trouver (char * scanprenom,char * scannom,char * scannum, char *scanmail,int checksuppr,int checkmodifier);
 int est_num(char *num);
 char * strtok_empty (char * str, char const * sep);
 int est_mail(char *mail);

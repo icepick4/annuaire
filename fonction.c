@@ -6,14 +6,14 @@
 #define TAILLE_MAX 256
 #define chemin "annuaire5000_test.csv"
 #define MAXTAB 100000
-int tab[7] = {25,13,2,14,36,15,1};
-char choix[TAILLE_MAX+1],choix_tri[TAILLE_MAX+1],choix_affiche[TAILLE_MAX+1], choixchoix_filtre[TAILLE_MAX+1],choix_filtre[TAILLE_MAX+1],filtre[TAILLE_MAX+1];
+char choix[TAILLE_MAX+1],choix_tri[TAILLE_MAX+1],choix_affiche[TAILLE_MAX+1],
+choixchoix_filtre[TAILLE_MAX+1],choix_filtre[TAILLE_MAX+1],filtre[TAILLE_MAX+1];
 char * field[8] = {"Id : ","Prenom : ","Nom : ","Adresse : ","Code Postale : ","Numero de telephone : ","Adresse Mail : ","Profession : "},ligne[TAILLE_MAX+1];
 const char *sep = ",";
 char *token;
 sclient tableau[MAXTAB];
 void remplir(int modifier, int supprimer,sclient *client){ /*Fonction faite par Rémi JARA*/
-    FILE *fichier= fopen(chemin,"a+");
+    FILE *fichier= fopen(chemin,"a+"); /*On ouvre le fichier csv*/
     int i=0;
     if (modifier == 0 && supprimer == 0){
         if (fichier == NULL)
@@ -129,9 +129,8 @@ char * strtok_empty (char * str, char const * sep){ /*Fonction trouvé sur intern
         ret = src;
         src = NULL;
     }
-  return ret;
+    return ret;
 }
-
 void ajout(){ /*Fonction faite par Rémi JARA*/
     char nom[TAILLE_MAX+1],prenom[TAILLE_MAX+1],adresse[TAILLE_MAX+1],code_postale[TAILLE_MAX+1],num[TAILLE_MAX+1],mail[TAILLE_MAX+1],profession[TAILLE_MAX+1];
     printf("Prenom : ");
@@ -188,7 +187,6 @@ void afficher(char *choix_tri){ /*Fonction faite par Rémi JARA*/
             printf("\nErreur de selection\n");
             goto choixchoixfiltre;
         }
-
         choixchampfiltre : printf("Par quel champ voulez vous filtrer ? \n  - Pour un filtre par prenom --> tapez \"prenom\" \n  - Pour un filtre par nom --> tapez \"nom\" \n  - Pour un filtre par profession --> tapez \"profession\"\n  - Pour un filtre par code postale --> tapez \"code_postale\" \n");
         scanf("%s",&choix_filtre);
         if (strcmp(choix_filtre,"prenom")!=0&&strcmp(choix_filtre,"nom")!=0&&strcmp(choix_filtre,"profession")!=0&&strcmp(choix_filtre,"code_postale")!=0){
@@ -215,7 +213,6 @@ void afficher(char *choix_tri){ /*Fonction faite par Rémi JARA*/
         else if (strcmp(choix_filtre,"profession")==0){
             filtre_profession(filtre,choixchoix_filtre);
         }
-
     }
     else{
         int j,i,k=0;
@@ -308,40 +305,71 @@ void filtre_code_postale(char *filtre){ /*Fonction faite par Rémi JARA*/
     }
 }
 void modifier(){
-    input();
-    char choix[TAILLE_MAX+1];
-    int tableauChoix[7],i;
+    input(0,1);
+}
+void modifierclient(int modifierligne){
+    char newchamp[TAILLE_MAX+1];
+    int tableauChoix[7],i=0,j,choix;
     printf("Quel champs voulez vous modifier ?\n");
     printf("Prenom ? \"1\" / \"0\" : ");
-    scanf("%s",&choix);
+    scanf("%d",&choix);
     tableauChoix[i] = choix;
     i++;
     printf("Nom ? \"1\" / \"0\" : ");
-    scanf("%s",&choix);
+    scanf("%d",&choix);
     tableauChoix[i] = choix;
     i++;
     printf("Adresse ? \"1\" / \"0\" : ");
-    scanf("%s",&choix);
+    scanf("%d",&choix);
     tableauChoix[i] = choix;
     i++;
     printf("Code postale ? \"1\" / \"0\" : ");
-    scanf("%s",&choix);
+    scanf("%d",&choix);
     tableauChoix[i] = choix;
     i++;
     printf("Numero de telephone ? \"1\" / \"0\" : ");
-    scanf("%s",&choix);
+    scanf("%d",&choix);
     tableauChoix[i] = choix;
     i++;
     printf("Adresse email ? \"1\" / \"0\" : ");
-    scanf("%s",&choix);
+    scanf("%d",&choix);
     tableauChoix[i] = choix;
     i++;
     printf("Profession ? \"1\" / \"0\" : ");
-    scanf("%s",&choix);
+    scanf("%d",&choix);
     tableauChoix[i] = choix;
-    modifier(tableauChoix);
+    for (j=0;j<7;j++){
+        if (tableauChoix[j]){
+            printf("%s",field[j+1]);
+            gets(newchamp);
+            if (j==0){
+                tableau[modifierligne].prenom=newchamp;
+                printf("%s",tableau[modifierligne].prenom);
+            }
+            if (j==1){
+                tableau[modifierligne].nom= newchamp;
+            }
+            if (j==2){
+                tableau[modifierligne].adresse= newchamp;
+            }
+            if (j==3){
+                tableau[modifierligne].code_postale= newchamp;
+            }
+            if (j==4){
+                tableau[modifierligne].num= newchamp;
+            }
+            if (j==5){
+                tableau[modifierligne].mail= newchamp;
+            }
+            if (j==6){
+                tableau[modifierligne].profession= newchamp;
+            }
+
+        }
+    }
+    return 1;
 }
-int trouver(char * scanprenom,char * scannom,char * scannum, char *scanmail,int checksuppr){ /*Fonction faite par Rémi JARA*/
+int trouver(char * scanprenom,char * scannom,char * scannum, char *scanmail,int checksuppr,int checkmodifier){ /*Fonction faite par Rémi JARA*/
     int i,j=0,choix;
     int liste[MAXTAB];
     for (i=0;tableau[i].prenom!=NULL;i++){
@@ -367,6 +395,14 @@ int trouver(char * scanprenom,char * scannom,char * scannum, char *scanmail,int 
                 return 0;
             }
         }
+        else if(checkmodifier){
+            printf("\nIndiquez quel client vous souhaitez modifier en rentrant son indice ecrit ci-dessus : ");
+            scanf("%d",&choix);
+            modifierclient(liste[choix]);
+            printf("Le client a bien ete Modifier");
+            return 1;
+
+        }
     }
     else{
         printf("Aucun client ne rempli ces criteres\nVous pouvez l'ajouter si vous le souhaitez");
@@ -378,7 +414,7 @@ int suppr(int supprligne){ /*Fonction faite par Rémi JARA*/
     tableau[supprligne].deleted = "deleted";
     return 1;
 }
-void input(checksuppr){
+void input(int checksuppr,int checkmodifier){
     char verif[TAILLE_MAX+1];
     char num[TAILLE_MAX+1],mail[TAILLE_MAX+1],nom[TAILLE_MAX+1],prenom[TAILLE_MAX+1];
     printf("Entrez le prenom du client que vous cherchez : ");
@@ -391,7 +427,15 @@ void input(checksuppr){
         scanmail : printf("Entrez le mail du client que vous cherchez : ");
         scanf("%s",&mail);
         if (est_mail(mail)){
-            trouver(prenom,nom,"0",mail,0);
+            if (checksuppr){
+                trouver(prenom,nom,"0",mail,1,0);
+            }
+            else if (checkmodifier){
+                trouver(prenom,nom,"0",mail,0,1);
+            }
+            else{
+                trouver(prenom,nom,"0",mail,0,0);
+            }
         }
         else{
             printf("\nEmail non valide\nNorme des adresses email : ---@---.---\n");
@@ -402,7 +446,15 @@ void input(checksuppr){
         scannum : printf("Entrez le numero de telephone du client que vous cherchez: ");
         scanf("%s",&num);
         if (est_num(num)){
-            trouver(prenom,nom,num,"0",0);
+            if (checksuppr){
+                trouver(prenom,nom,"0",mail,1,0);
+            }
+            else if (checkmodifier){
+                trouver(prenom,nom,"0",mail,0,1);
+            }
+            else{
+                trouver(prenom,nom,"0",mail,0,0);
+            }
         }
         else{
             printf("\nNumero de telephone non valide\nNorme des numeros de telephone : 00.00.00.00.00\n");
@@ -471,7 +523,7 @@ int est_code_postal(char *code_postale){ /*Fonction faite par Rémi JARA*/
     return 0;
 }
 
-void menu(){
+void menu(){ /*Fonction faite par Rémi JARA */
     debut : printf("\nChoisis une action a realiser : \n  - Ajout de client --> tapez \"ajout\" \n  - Afficher la base de donnees --> tapez \"afficher\" \n  - Supprimer un client --> tapez \"suppr\"\n  - Rechercher un client --> tapez \"recherche\"\n  - Afficher tous les clients auquels il manque un ou plusieurs champ(s) --> tapez \"manquant\" \n ");
     scanf("%s",&choix);
     if (strcmp(choix, "afficher")==0){
@@ -484,15 +536,16 @@ void menu(){
     }
     else if (strcmp(choix, "modifier")==0){
         modifier();
+        goto debut;
     }
     else if(strcmp(choix,"suppr")==0){
-        input();
+        input(1,0);
         goto debut;
     }
     else if(strcmp(choix,"stop")==0){
     }
     else if (strcmp(choix,"recherche")==0){
-        input();
+        input(0,0);
         goto debut;
     }
     else if (strcmp(choix,"manquant")==0){
