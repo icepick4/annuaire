@@ -120,16 +120,29 @@ void ajout(char *nom, char *prenom, char *adresse, char *code_postale, char *num
     tableau[i].deleted = "ok";
 }
 void afficher(char *choix_tri){
-    int j,i;
+    int j,i,k=0;
     for (j=0;tableau[j].prenom!=NULL;){
         j++;
     }
+    printf("|%-5s | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",field[0],field[1],field[2],field[3],field[4],field[5],field[6],field[7]);
+
     for (i=0;i<j;i++)
     {
-
+        if (strcmp(choix_tri,"manquant")!=0){
             if (strcmp(tableau[i].deleted,"ok")==0){
-            printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
             }
+        }
+
+        else if (strcmp(choix_tri,"manquant")==0){
+            if (strcmp(tableau[i].deleted,"ok")==0 && strcmp(tableau[i].prenom,"<empty>")==0||strcmp(tableau[i].nom,"<empty>")==0||strcmp(tableau[i].adresse,"<empty>")==0||strcmp(tableau[i].code_postale,"<empty>")==0||strcmp(tableau[i].num,"<empty>")==0||strcmp(tableau[i].mail,"<empty>")==0||strcmp(tableau[i].profession,"<empty>")==0){
+            printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+            k++;
+            }
+        }
+    }
+    if (strcmp(choix_tri,"manquant")==0){
+        printf("Le fichier client contient %d client avec un ou plusieurs champs manquants",k);
     }
 }
 void filtrer(char *choix_filtre,char *filtre,char *choixchoix_filtre){
@@ -137,12 +150,46 @@ void filtrer(char *choix_filtre,char *filtre,char *choixchoix_filtre){
     for (j=0;tableau[j].prenom!=NULL;){
         j++;
     }
+    printf("|%-5s | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",field[0],field[1],field[2],field[3],field[4],field[5],field[6],field[7]);
+
     for (i=0;i<j;i++)
     {
 
         if (strcmp(choixchoix_filtre,"non")==0){
             if (strcmp(choix_filtre,"prenom")==0){
                 if(strcmp(tableau[i].prenom,filtre)==0){
+                    if (strcmp(tableau[i].deleted,"ok")==0){
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            else if (strcmp(choix_filtre,"nom")==0){
+                if(strcmp(tableau[i].nom,filtre)==0){
+                    if (strcmp(tableau[i].deleted,"ok")==0){
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+
+                    }
+                }
+            }
+            else if (strcmp(choix_filtre,"profession")==0){
+                if(strcmp(tableau[i].profession,filtre)==0){
+                    if (strcmp(tableau[i].deleted,"ok")==0){
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            else if (strcmp(choix_filtre,"code_postale")==0){
+                if(strcmp(tableau[i].code_postale,filtre)==0){
+                    if (strcmp(tableau[i].deleted,"ok")==0){
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+        }
+        else{
+            if (strcmp(choix_filtre,"prenom")==0){
+                if(strcmp(tableau[i].prenom,filtre)==0){
+                    printf("OUI");
                     if (strcmp(tableau[i].deleted,"ok")==0){
                     printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
                     }
@@ -157,37 +204,6 @@ void filtrer(char *choix_filtre,char *filtre,char *choixchoix_filtre){
             }
             else if (strcmp(choix_filtre,"profession")==0){
                 if(strcmp(tableau[i].profession,filtre)==0){
-                    if (strcmp(tableau[i].deleted,"ok")==0){
-                    printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
-                    }
-                }
-            }
-            else if (strcmp(choix_filtre,"code_postale")==0){
-                if(strcmp(tableau[i].code_postale,filtre)==0){
-                    if (strcmp(tableau[i].deleted,"ok")==0){
-                    printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
-                    }
-                }
-            }
-        }
-        else{
-            if (strcmp(choix_filtre,"prenom")==0){
-                if(strcmp(tableau[i].prenom[0],filtre)==0){
-                    printf("OUI");
-                    if (strcmp(tableau[i].deleted,"ok")==0){
-                    printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
-                    }
-                }
-            }
-            else if (strcmp(choix_filtre,"nom")==0){
-                if(strcmp(tableau[i].nom[0],filtre)==0){
-                    if (strcmp(tableau[i].deleted,"ok")==0){
-                    printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
-                    }
-                }
-            }
-            else if (strcmp(choix_filtre,"profession")==0){
-                if(strcmp(tableau[i].profession[0],filtre)==0){
                     if (strcmp(tableau[i].deleted,"ok")==0){
                     printf("%-10d | %-20s | %-26s | %-30s | %-10s | %-20s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
                     }
@@ -233,6 +249,7 @@ int suppr(int supprligne){
     return 1;
 
 }
+
 int est_num(char *num){
     int i,ctrcheck = 0;
     for (i=0;i<14;i++){
