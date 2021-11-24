@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "fonction.c"
+#include "fonction.h"
 #define TAILLE_MAX 256
-void main(){
-    remplir(0,0);
+#define MAXTAB 100000
+
+int main(void){
+    printf("binz");
+    remplir(0,0,tableau);
     int tab[7] = {25,13,2,14,36,15,1};/* initialisation du tableau de valeurs*/
     /*insertion(tab,(sizeof tab / sizeof tab[0]));*/
     char choix[TAILLE_MAX+1],choix_tri[TAILLE_MAX+1],choix_affiche[TAILLE_MAX+1], choixchoix_filtre[TAILLE_MAX+1],choix_filtre[TAILLE_MAX+1],filtre[TAILLE_MAX+1],nom[TAILLE_MAX+1],prenom[TAILLE_MAX+1],adresse[TAILLE_MAX+1],code_postale[TAILLE_MAX+1],num[TAILLE_MAX+1],mail[TAILLE_MAX+1],profession[TAILLE_MAX+1];
@@ -35,7 +38,7 @@ void main(){
             scanf("%s",&filtre);
             if (strcmp(choix_filtre,"code_postale")==0&&strcmp(choixchoix_filtre,"oui")!=0){
                 if (est_code_postal(filtre)){
-                    filtrer(choix_filtre,filtre,choixchoix_filtre);
+                    filtre_code_postale(filtre);
                     goto debut;
                 }
                 else{
@@ -43,8 +46,16 @@ void main(){
                     goto choixfiltre;
                 }
             }
-            else{
-                filtrer(choix_filtre,filtre,choixchoix_filtre);
+            else if (strcmp(choix_filtre,"prenom")==0){
+                filtre_prenom(filtre,choixchoix_filtre);
+                goto debut;
+            }
+            else if (strcmp(choix_filtre,"nom")==0){
+                filtre_nom(filtre,choixchoix_filtre);
+                goto debut;
+            }
+            else if (strcmp(choix_filtre,"profession")==0){
+                filtre_profession(filtre,choixchoix_filtre);
                 goto debut;
             }
 
@@ -89,7 +100,7 @@ void main(){
     else if(strcmp(choix,"suppr")==0){
         char verif[TAILLE_MAX+1];
         char num[TAILLE_MAX+1],mail[TAILLE_MAX+1],nom[TAILLE_MAX+1],prenom[TAILLE_MAX+1];
-        scan_nom_suppr : printf("Entrez le prenom du client a supprimer : ");
+        printf("Entrez le prenom du client a supprimer : ");
         scanf("%s",&prenom);
         printf("Entrez le nom du client a supprimer : ");
         scanf("%s",&nom);
@@ -129,7 +140,7 @@ void main(){
     else if (strcmp(choix,"recherche")==0){
         char verif[TAILLE_MAX+1];
         char num[TAILLE_MAX+1],mail[TAILLE_MAX+1],nom[TAILLE_MAX+1],prenom[TAILLE_MAX+1];
-        scan_nom : printf("Entrez le prenom du client que vous cherchez : ");
+        printf("Entrez le prenom du client que vous cherchez : ");
         scanf("%s",&prenom);
         printf("Entrez le nom du client que vous cherchez : ");
         scanf("%s",&nom);
@@ -171,6 +182,7 @@ void main(){
     else{
         goto debut;
     }
+    return 0;
 }
 
 
