@@ -11,7 +11,7 @@ char * field[8] = {"Id : ","Prenom : ","Nom : ","Adresse : ","Code Postale : ","
 const char *sep = ",";
 char *token;
 sclient tableau[MAXTAB];
-void remplir(int modifier, int supprimer,sclient *client){
+void remplir(int modifier, int supprimer,sclient *client){ /*Fonction faite par Rémi JARA*/
     FILE *fichier= fopen(chemin,"a+");
     int i=0;
     if (modifier == 0 && supprimer == 0){
@@ -21,7 +21,6 @@ void remplir(int modifier, int supprimer,sclient *client){
             exit(EXIT_FAILURE);
         }
         while(fgets(ligne,TAILLE_MAX+1,fichier)){
-
             char * token = strtok_empty(ligne, "," );
             int j = 0;
             while (token){
@@ -96,7 +95,7 @@ void remplir(int modifier, int supprimer,sclient *client){
         fclose(fichier);
     }
 }
-void insertion (int t[],int len_t){
+void insertion (int t[],int len_t){ /*Fonction faite par Rémi JARA*/
     int i,h,c;
     for(i=1;i<len_t;i++){
         while((i>0) && (t[i]<t[i-1])){
@@ -110,7 +109,7 @@ void insertion (int t[],int len_t){
       printf("\ntableau[%d] = %d", h, t[h]);
    }
 }
-char * strtok_empty (char * str, char const * sep){
+char * strtok_empty (char * str, char const * sep){ /*Fonction trouvé sur internet*/
     static char  * src = NULL;
     char  *  p,  * ret = 0;
 
@@ -132,7 +131,7 @@ char * strtok_empty (char * str, char const * sep){
   return ret;
 }
 
-void ajout(char *nom, char *prenom, char *adresse, char *code_postale, char *num, char *mail, char *profession){
+void ajout(char *nom, char *prenom, char *adresse, char *code_postale, char *num, char *mail, char *profession){ /*Fonction faite par Rémi JARA*/
     int i;
     for (i=0;tableau[i].prenom!=NULL;){
         i++;
@@ -147,7 +146,7 @@ void ajout(char *nom, char *prenom, char *adresse, char *code_postale, char *num
     tableau[i].profession = profession;
     tableau[i].deleted = "ok";
 }
-void afficher(char *choix_tri){
+void afficher(char *choix_tri){ /*Fonction faite par Rémi JARA*/
     int j,i,k=0;
     for (j=0;tableau[j].prenom!=NULL;){
         j++;
@@ -173,7 +172,7 @@ void afficher(char *choix_tri){
         printf("Le fichier client contient %d client avec un ou plusieurs champs manquants",k);
     }
 }
-void filtre_prenom(char *filtre,char *choixchoix_filtre){
+void filtre_prenom(char *filtre,char *choixchoix_filtre){ /*Fonction faite par Rémi JARA*/
     int j,i;
     for (j=0;tableau[j].prenom!=NULL;){
         j++;
@@ -188,7 +187,7 @@ void filtre_prenom(char *filtre,char *choixchoix_filtre){
         }
     }
 }
-void filtre_nom(char *filtre,char *choixchoix_filtre){
+void filtre_nom(char *filtre,char *choixchoix_filtre){ /*Fonction faite par Rémi JARA*/
     int j,i;
     for (j=0;tableau[j].prenom!=NULL;){
         j++;
@@ -204,7 +203,7 @@ void filtre_nom(char *filtre,char *choixchoix_filtre){
         }
     }
 }
-void filtre_profession(char *filtre,char *choixchoix_filtre){
+void filtre_profession(char *filtre,char *choixchoix_filtre){ /*Fonction faite par Rémi JARA*/
     int j,i;
     for (j=0;tableau[j].prenom!=NULL;){
         j++;
@@ -220,7 +219,7 @@ void filtre_profession(char *filtre,char *choixchoix_filtre){
         }
     }
 }
-void filtre_code_postale(char *filtre){
+void filtre_code_postale(char *filtre){ /*Fonction faite par Rémi JARA*/
     int j,i;
     for (j=0;tableau[j].prenom!=NULL;){
         j++;
@@ -236,7 +235,7 @@ void filtre_code_postale(char *filtre){
         }
     }
 }
-int trouver(char * scanprenom,char * scannom,char * scannum, char *scanmail,int checksuppr){
+int trouver(char * scanprenom,char * scannom,char * scannum, char *scanmail,int checksuppr){ /*Fonction faite par Rémi JARA*/
     int i,j=0,choix;
     int liste[MAXTAB];
     for (i=0;tableau[i].prenom!=NULL;i++){
@@ -269,13 +268,13 @@ int trouver(char * scanprenom,char * scannom,char * scannum, char *scanmail,int 
     }
     return 0;
 }
-int suppr(int supprligne){
+int suppr(int supprligne){ /*Fonction faite par Rémi JARA*/
     tableau[supprligne].deleted = "deleted";
     return 1;
 
 }
 
-int est_num(char *num){
+int est_num(char *num){ /*Fonction faite par Rémi JARA*/
     int i,ctrcheck = 0;
     for (i=0;i<14;i++){
         if (i == 0 || i == 1 || i == 3 || i == 4 || i == 6 || i == 7 || i == 9 || i == 10 || i == 12 || i == 13){
@@ -296,7 +295,7 @@ int est_num(char *num){
         return 0;
     }
 }
-int est_mail(char *mail){
+int est_mail(char *mail){ /*Fonction faite par Rémi JARA*/
     int i=0;
     int len_mail = strlen(mail);
     if (i == 0&&!(isalpha(mail[i]))){
@@ -320,7 +319,7 @@ int est_mail(char *mail){
     return 1;
 
 }
-int est_code_postal(char *code_postale){
+int est_code_postal(char *code_postale){ /*Fonction faite par Rémi JARA*/
     int i,ctr=0;
     for (i=0;i<strlen(code_postale);i++){
         if (isdigit(code_postale[i])){
