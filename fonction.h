@@ -33,6 +33,7 @@ void filtre_prenom(char *filtre,char *choixchoix_filtre);
 void filtre_nom(char *filtre,char *choixchoix_filtre);
 void filtre_profession(char *filtre,char *choixchoix_filtre);
 void filtre_code_postale(char *filtre);
+void tri_prenom(int choix_sens_tri);
 int est_code_postal(char *code_postale);
 void menu();
 

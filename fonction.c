@@ -7,11 +7,12 @@
 #define chemin "annuaire5000_test.csv"
 #define MAXTAB 100000
 char choix[TAILLE_MAX+1],choix_tri[TAILLE_MAX+1],choix_affiche[TAILLE_MAX+1],
-choixchoix_filtre[TAILLE_MAX+1],choix_filtre[TAILLE_MAX+1],filtre[TAILLE_MAX+1];
+choixchoix_filtre[TAILLE_MAX+1],choix_filtre[TAILLE_MAX+1],filtre[TAILLE_MAX+1],choix_affichage[TAILLE_MAX+1];
 char * field[8] = {"Id : ","Prenom : ","Nom : ","Adresse : ","Code Postale : ","Numero de telephone : ","Adresse Mail : ","Profession : "},ligne[TAILLE_MAX+1];
 const char *sep = ",";
 char *token;
 sclient tableau[MAXTAB];
+sclient temptableau[MAXTAB];
 void remplir(int modifier, int supprimer,sclient *client){ /*Fonction faite par Rémi JARA*/
     FILE *fichier= fopen(chemin,"a+"); /*On ouvre le fichier csv*/
     int i=0;
@@ -31,7 +32,7 @@ void remplir(int modifier, int supprimer,sclient *client){ /*Fonction faite par 
                         client[i].prenom = strdup(token);
                     }
                     else{
-                        client[i].prenom = strdup("Champ vide");
+                        client[i].prenom = strdup("*Champ vide*");
                     }
                 }
                 else if (j==1){
@@ -39,7 +40,7 @@ void remplir(int modifier, int supprimer,sclient *client){ /*Fonction faite par 
                         client[i].nom = strdup(token);
                     }
                     else{
-                        client[i].nom = strdup("Champ vide");
+                        client[i].nom = strdup("*Champ vide*");
                     }
                 }
                 else if (j==2){
@@ -47,7 +48,7 @@ void remplir(int modifier, int supprimer,sclient *client){ /*Fonction faite par 
                         client[i].adresse = strdup(token);
                     }
                     else{
-                        client[i].adresse = strdup("Champ vide");
+                        client[i].adresse = strdup("*Champ vide*");
                     }
                 }
                 else if (j==3){
@@ -55,7 +56,7 @@ void remplir(int modifier, int supprimer,sclient *client){ /*Fonction faite par 
                         client[i].code_postale = strdup(token);
                     }
                     else{
-                        client[i].code_postale = strdup("Champ vide");
+                        client[i].code_postale = strdup("*Champ vide*");
                     }
                 }
                 else if (j==4){
@@ -63,7 +64,7 @@ void remplir(int modifier, int supprimer,sclient *client){ /*Fonction faite par 
                         client[i].num = strdup(token);
                     }
                     else{
-                        client[i].num = strdup("Champ vide");
+                        client[i].num = strdup("*Champ vide*");
                     }
                 }
                 else if (j==5){
@@ -71,7 +72,7 @@ void remplir(int modifier, int supprimer,sclient *client){ /*Fonction faite par 
                         client[i].mail = strdup(token);
                     }
                     else{
-                        client[i].mail = strdup("Champ vide");
+                        client[i].mail = strdup("*Champ vide*");
                     }
                 }
                 else if (j==6){
@@ -82,7 +83,7 @@ void remplir(int modifier, int supprimer,sclient *client){ /*Fonction faite par 
                         client[i].profession = strdup(token);
                     }
                     else{
-                        client[i].profession = strdup("Champ vide");
+                        client[i].profession = strdup("*Champ vide*");
                     }
                 }
                 j++;
@@ -174,11 +175,78 @@ void ajout(){ /*Fonction faite par Rémi JARA*/
     tableau[i].deleted = "ok";
     printf("Le client a bien ete ajoute\n");
 }
-void afficher(char *choix_tri){ /*Fonction faite par Rémi JARA*/
+void afficher(char *choix_affichage){ /*Fonction faite par Rémi JARA*/
     printf("Voulez vous afficher les donnees avec un filtre ou un tri ? \n  - Pour un filtre --> tapez \"filtre\" \n  - Pour un tri --> tapez \"tri\" \n  - Si vous voulez uniquement afficher la base de donnees --> tapez \"non\" \n");
     scanf("%s",choix_affiche);
     if (strcmp(choix_affiche,"tri")==0){
-        /*choisir le tri voulu*/
+        choixtri : printf("Par quel champ souhaitez vous trier les clients ? \  -Pour trier par leur prenom --> tapez \"prenom\"\n  - Pour trier par leur nom --> tapez \"nom\"\n  - Pour trier par leur code postaux --> tapez \"code_postale\"\n  - Pour trier par leur profession --> tapez \"profession\"\n");
+        scanf("%s",&choix_tri);
+        if (strcmp(choix_tri,"prenom")==0){
+            int choix_sens_tri;
+            printf("Souhaitez vous un affichage croissant (1) ou décroissant (0) ? : ");
+            scanf("%d",&choix_sens_tri);
+            switch(choix_sens_tri){
+                case 0:
+                    tri_prenom(0);
+                    break;
+                case 1:
+                    tri_prenom(1);
+                default:
+                    printf("Erreur dans la sélection");
+                    goto choixtri;
+            }
+        }
+        else if (strcmp(choix_tri,"nom")==0){
+            int choix_sens_tri;
+            printf("Souhaitez vous un affichage croissant (1) ou décroissant (0) ? : ");
+            scanf("%d",&choix_sens_tri);
+            switch(choix_sens_tri){
+                case 0:
+                    tri_nom(0);
+                    break;
+                case 1:
+                    tri_nom(1);
+                default:
+                    printf("Erreur dans la sélection");
+                    goto choixtri;
+            }
+        }
+        else if (strcmp(choix_tri,"code_postale")==0){
+            int choix_sens_tri;
+            printf("Souhaitez vous un affichage croissant (1) ou décroissant (0) ? : ");
+            scanf("%d",&choix_sens_tri);
+            switch(choix_sens_tri){
+                case 0:
+                    tri_code_postale(0);
+                    break;
+                case 1:
+                    tri_code_postale(1);
+                    break;
+                default:
+                    printf("Erreur dans la sélection");
+                    goto choixtri;
+            }
+        }
+        else if (strcmp(choix_tri,"profession")==0){
+            int choix_sens_tri;
+            printf("Souhaitez vous un affichage croissant (1) ou décroissant (0) ? : ");
+            scanf("%d",&choix_sens_tri);
+            switch(choix_sens_tri){
+                case 0:
+                    tri_profession(0);
+                    break;
+                case 1:
+                    printf("oui");
+                    tri_profession(1);
+                default:
+                    printf("Erreur dans la sélection");
+                    goto choixtri;
+            }
+        }
+        else{
+            printf("Erreur dans la sélection");
+            goto choixtri;
+        }
     }
     else if (strcmp(choix_affiche,"filtre")==0){
         choixchoixfiltre : printf("Voulez vous filtrer avec la premiere lettre ou un champ precis ?\n  - Pour une seule lettre --> tapez \"oui\" \n  - Pour un champ precis --> tapez \"non\"\n");
@@ -223,20 +291,20 @@ void afficher(char *choix_tri){ /*Fonction faite par Rémi JARA*/
 
         for (i=0;i<j;i++)
         {
-            if (strcmp(choix_tri,"manquant")!=0){
+            if (strcmp(choix_affichage,"manquant")!=0){
 
                 if (strcmp(tableau[i].deleted,"ok")==0){
                     printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
                 }
             }
-            else if (strcmp(choix_tri,"manquant")==0){
-                if (strcmp(tableau[i].deleted,"ok")==0 && strcmp(tableau[i].prenom,"Champ vide")==0||strcmp(tableau[i].nom,"Champ vide")==0||strcmp(tableau[i].adresse,"Champ vide")==0||strcmp(tableau[i].code_postale,"Champ vide")==0||strcmp(tableau[i].num,"<empty>")==0||strcmp(tableau[i].mail,"<empty>")==0||strcmp(tableau[i].profession,"<empty>")==0){
+            else if (strcmp(choix_affichage,"manquant")==0){
+                if (strcmp(tableau[i].deleted,"ok")==0 && strcmp(tableau[i].prenom,"*Champ vide*")==0||strcmp(tableau[i].nom,"*Champ vide*")==0||strcmp(tableau[i].adresse,"*Champ vide*")==0||strcmp(tableau[i].code_postale,"*Champ vide*")==0||strcmp(tableau[i].num,"<empty>")==0||strcmp(tableau[i].mail,"<empty>")==0||strcmp(tableau[i].profession,"<empty>")==0){
                 printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
                 k++;
                 }
             }
         }
-        if (strcmp(choix_tri,"manquant")==0){
+        if (strcmp(choix_affichage,"manquant")==0){
             printf("Le fichier client contient %d client avec un ou plusieurs champs manquants",k);
         }
     }
@@ -367,7 +435,6 @@ void modifierclient(int modifierligne){
 
         }
     }
-    return 1;
 }
 int trouver(char * scanprenom,char * scannom,char * scannum, char *scanmail,int checksuppr,int checkmodifier){ /*Fonction faite par Rémi JARA*/
     int i,j=0,choix;
@@ -414,7 +481,7 @@ int suppr(int supprligne){ /*Fonction faite par Rémi JARA*/
     tableau[supprligne].deleted = "deleted";
     return 1;
 }
-void input(int checksuppr,int checkmodifier){
+void input(int checksuppr,int checkmodifier){ /*Fonction faite par Rémi JARA*/
     char verif[TAILLE_MAX+1];
     char num[TAILLE_MAX+1],mail[TAILLE_MAX+1],nom[TAILLE_MAX+1],prenom[TAILLE_MAX+1];
     printf("Entrez le prenom du client que vous cherchez : ");
@@ -522,7 +589,270 @@ int est_code_postal(char *code_postale){ /*Fonction faite par Rémi JARA*/
     }
     return 0;
 }
+void tri_prenom(int choix_sens_tri){
 
+    char *tempprenom, *tempnom, *tempadresse, *tempcode_postale, *tempnum, *tempmail, *tempprofession, *tempdeleted;
+    int i,j,k,tempid;
+    remplir(0,0,temptableau);
+    for (k=0;tableau[k].prenom!=NULL;){
+        k++;
+    }
+    for (i = 0; i < k; i++){
+        for (j = 0; j < k; j++){
+            if(choix_sens_tri){
+                if (strcmpi(temptableau[i].prenom, temptableau[j].prenom) < 0&& strcmp(temptableau[i].profession, "*Champ vide*")!=0){
+                    tempid = temptableau[i].id;
+                    tempdeleted = temptableau[i].deleted;
+                    tempprenom = temptableau[i].prenom;
+                    tempnom = temptableau[i].nom;
+                    tempadresse = temptableau[i].adresse;
+                    tempcode_postale = temptableau[i].code_postale;
+                    tempnum = temptableau[i].num;
+                    tempmail = temptableau[i].mail;
+                    tempprofession = temptableau[i].profession;
+                    temptableau[i] = temptableau[j];
+                    temptableau[j].id = tempid;
+                    temptableau[j].deleted = tempdeleted;
+                    temptableau[j].prenom = tempprenom;
+                    temptableau[j].nom = tempnom;
+                    temptableau[j].adresse = tempadresse;
+                    temptableau[j].code_postale = tempcode_postale;
+                    temptableau[j].num = tempnum;
+                    temptableau[j].mail = tempmail;
+                    temptableau[j].profession = tempprofession;
+                }
+            }
+            else{
+                if (strcmpi(temptableau[i].prenom, temptableau[j].prenom) > 0&& strcmp(temptableau[i].profession, "*Champ vide*")!=0){
+                    tempid = temptableau[i].id;
+                    tempdeleted = temptableau[i].deleted;
+                    tempprenom = temptableau[i].prenom;
+                    tempnom = temptableau[i].nom;
+                    tempadresse = temptableau[i].adresse;
+                    tempcode_postale = temptableau[i].code_postale;
+                    tempnum = temptableau[i].num;
+                    tempmail = temptableau[i].mail;
+                    tempprofession = temptableau[i].profession;
+                    temptableau[i] = temptableau[j];
+                    temptableau[j].id = tempid;
+                    temptableau[j].deleted = tempdeleted;
+                    temptableau[j].prenom = tempprenom;
+                    temptableau[j].nom = tempnom;
+                    temptableau[j].adresse = tempadresse;
+                    temptableau[j].code_postale = tempcode_postale;
+                    temptableau[j].num = tempnum;
+                    temptableau[j].mail = tempmail;
+                    temptableau[j].profession = tempprofession;
+                }
+            }
+        }
+    }
+    printf("|%-5s | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",field[0],field[1],field[2],field[3],field[4],field[5],field[6],field[7]);
+    for (i=0;i<k;i++)
+    {
+        if (strcmp(temptableau[i].deleted,"ok")==0){
+            printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",temptableau[i].id,temptableau[i].prenom,temptableau[i].nom,temptableau[i].adresse,temptableau[i].code_postale,temptableau[i].num,temptableau[i].mail,temptableau[i].profession);
+        }
+    }
+}
+void tri_nom(int choix_sens_tri){
+
+    char *tempprenom, *tempnom, *tempadresse, *tempcode_postale, *tempnum, *tempmail, *tempprofession, *tempdeleted;
+    int i, j,k,tempid;
+    remplir(0,0,temptableau);
+    for (k=0;tableau[k].prenom!=NULL;){
+        k++;
+    }
+    for (i = 0; i < k; i++){
+        for (j = 0; j < k; j++){
+            if(choix_sens_tri){
+                if (strcmpi(temptableau[i].nom, temptableau[j].nom) < 0&& strcmp(temptableau[i].profession, "*Champ vide*")!=0){
+                    tempid = temptableau[i].id;
+                    tempdeleted = temptableau[i].deleted;
+                    tempprenom = temptableau[i].prenom;
+                    tempnom = temptableau[i].nom;
+                    tempadresse = temptableau[i].adresse;
+                    tempcode_postale = temptableau[i].code_postale;
+                    tempnum = temptableau[i].num;
+                    tempmail = temptableau[i].mail;
+                    tempprofession = temptableau[i].profession;
+                    temptableau[i] = temptableau[j];
+                    temptableau[j].id = tempid;
+                    temptableau[j].deleted = tempdeleted;
+                    temptableau[j].prenom = tempprenom;
+                    temptableau[j].nom = tempnom;
+                    temptableau[j].adresse = tempadresse;
+                    temptableau[j].code_postale = tempcode_postale;
+                    temptableau[j].num = tempnum;
+                    temptableau[j].mail = tempmail;
+                    temptableau[j].profession = tempprofession;
+                }
+            }
+            else{
+                if (strcmpi(temptableau[i].nom, temptableau[j].nom) > 0&& strcmp(temptableau[i].profession, "*Champ vide*")!=0){
+                    tempid = temptableau[i].id;
+                    tempdeleted = temptableau[i].deleted;
+                    tempprenom = temptableau[i].prenom;
+                    tempnom = temptableau[i].nom;
+                    tempadresse = temptableau[i].adresse;
+                    tempcode_postale = temptableau[i].code_postale;
+                    tempnum = temptableau[i].num;
+                    tempmail = temptableau[i].mail;
+                    tempprofession = temptableau[i].profession;
+                    temptableau[i] = temptableau[j];
+                    temptableau[j].id = tempid;
+                    temptableau[j].deleted = tempdeleted;
+                    temptableau[j].prenom = tempprenom;
+                    temptableau[j].nom = tempnom;
+                    temptableau[j].adresse = tempadresse;
+                    temptableau[j].code_postale = tempcode_postale;
+                    temptableau[j].num = tempnum;
+                    temptableau[j].mail = tempmail;
+                    temptableau[j].profession = tempprofession;
+                }
+            }
+        }
+    }
+    printf("|%-5s | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",field[0],field[1],field[2],field[3],field[4],field[5],field[6],field[7]);
+    for (i=0;i<k;i++)
+    {
+        if (strcmp(temptableau[i].deleted,"ok")==0){
+            printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",temptableau[i].id,temptableau[i].prenom,temptableau[i].nom,temptableau[i].adresse,temptableau[i].code_postale,temptableau[i].num,temptableau[i].mail,temptableau[i].profession);
+        }
+    }
+}
+void tri_profession(int choix_sens_tri){
+
+    char *tempprenom, *tempnom, *tempadresse, *tempcode_postale, *tempnum, *tempmail, *tempprofession, *tempdeleted;
+    int i, j,k,tempid;
+    remplir(0,0,temptableau);
+    for (k=0;tableau[k].prenom!=NULL;){
+        k++;
+    }
+    for (i = 0; i < k; i++){
+        for (j = 0; j < k; j++){
+            if(choix_sens_tri){
+                if (strcmpi(temptableau[i].profession, temptableau[j].profession) < 0 && strcmp(temptableau[i].profession, "*Champ vide*")!=0){
+                    tempid = temptableau[i].id;
+                    tempdeleted = temptableau[i].deleted;
+                    tempprenom = temptableau[i].prenom;
+                    tempnom = temptableau[i].nom;
+                    tempadresse = temptableau[i].adresse;
+                    tempcode_postale = temptableau[i].code_postale;
+                    tempnum = temptableau[i].num;
+                    tempmail = temptableau[i].mail;
+                    tempprofession = temptableau[i].profession;
+                    temptableau[i] = temptableau[j];
+                    temptableau[j].id = tempid;
+                    temptableau[j].deleted = tempdeleted;
+                    temptableau[j].prenom = tempprenom;
+                    temptableau[j].nom = tempnom;
+                    temptableau[j].adresse = tempadresse;
+                    temptableau[j].code_postale = tempcode_postale;
+                    temptableau[j].num = tempnum;
+                    temptableau[j].mail = tempmail;
+                    temptableau[j].profession = tempprofession;
+                }
+            }
+            else{
+                if (strcmpi(temptableau[i].profession, temptableau[j].profession) > 0&& strcmp(temptableau[i].profession, "*Champ vide*")!=0){
+                    tempid = temptableau[i].id;
+                    tempdeleted = temptableau[i].deleted;
+                    tempprenom = temptableau[i].prenom;
+                    tempnom = temptableau[i].nom;
+                    tempadresse = temptableau[i].adresse;
+                    tempcode_postale = temptableau[i].code_postale;
+                    tempnum = temptableau[i].num;
+                    tempmail = temptableau[i].mail;
+                    tempprofession = temptableau[i].profession;
+                    temptableau[i] = temptableau[j];
+                    temptableau[j].id = tempid;
+                    temptableau[j].deleted = tempdeleted;
+                    temptableau[j].prenom = tempprenom;
+                    temptableau[j].nom = tempnom;
+                    temptableau[j].adresse = tempadresse;
+                    temptableau[j].code_postale = tempcode_postale;
+                    temptableau[j].num = tempnum;
+                    temptableau[j].mail = tempmail;
+                    temptableau[j].profession = tempprofession;
+                }
+            }
+        }
+    }
+    printf("|%-5s | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",field[0],field[1],field[2],field[3],field[4],field[5],field[6],field[7]);
+    for (i=0;i<k;i++)
+    {
+        if (strcmp(temptableau[i].deleted,"ok")==0){
+            printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",temptableau[i].id,temptableau[i].prenom,temptableau[i].nom,temptableau[i].adresse,temptableau[i].code_postale,temptableau[i].num,temptableau[i].mail,temptableau[i].profession);
+        }
+    }
+}
+void tri_code_postale(int choix_sens_tri){
+
+    char *tempprenom, *tempnom, *tempadresse, *tempcode_postale, *tempnum, *tempmail, *tempprofession, *tempdeleted;
+    int i, j,k,tempid;
+    remplir(0,0,temptableau);
+    for (k=0;tableau[k].prenom!=NULL;){
+        k++;
+    }
+    for (i = 0; i < k; i++){
+        for (j = 0; j < k; j++){
+            if(choix_sens_tri){
+                if (strcmpi(temptableau[i].code_postale, temptableau[j].code_postale) < 0&& strcmp(temptableau[i].profession, "*Champ vide*")!=0){
+                    tempid = temptableau[i].id;
+                    tempdeleted = temptableau[i].deleted;
+                    tempprenom = temptableau[i].prenom;
+                    tempnom = temptableau[i].nom;
+                    tempadresse = temptableau[i].adresse;
+                    tempcode_postale = temptableau[i].code_postale;
+                    tempnum = temptableau[i].num;
+                    tempmail = temptableau[i].mail;
+                    tempprofession = temptableau[i].profession;
+                    temptableau[i] = temptableau[j];
+                    temptableau[j].id = tempid;
+                    temptableau[j].deleted = tempdeleted;
+                    temptableau[j].prenom = tempprenom;
+                    temptableau[j].nom = tempnom;
+                    temptableau[j].adresse = tempadresse;
+                    temptableau[j].code_postale = tempcode_postale;
+                    temptableau[j].num = tempnum;
+                    temptableau[j].mail = tempmail;
+                    temptableau[j].profession = tempprofession;
+                }
+            }
+            else{
+                if (strcmpi(temptableau[i].code_postale, temptableau[j].code_postale) > 0&& strcmp(temptableau[i].profession, "*Champ vide*")!=0){
+                    tempid = temptableau[i].id;
+                    tempdeleted = temptableau[i].deleted;
+                    tempprenom = temptableau[i].prenom;
+                    tempnom = temptableau[i].nom;
+                    tempadresse = temptableau[i].adresse;
+                    tempcode_postale = temptableau[i].code_postale;
+                    tempnum = temptableau[i].num;
+                    tempmail = temptableau[i].mail;
+                    tempprofession = temptableau[i].profession;
+                    temptableau[i] = temptableau[j];
+                    temptableau[j].id = tempid;
+                    temptableau[j].deleted = tempdeleted;
+                    temptableau[j].prenom = tempprenom;
+                    temptableau[j].nom = tempnom;
+                    temptableau[j].adresse = tempadresse;
+                    temptableau[j].code_postale = tempcode_postale;
+                    temptableau[j].num = tempnum;
+                    temptableau[j].mail = tempmail;
+                    temptableau[j].profession = tempprofession;
+                }
+            }
+        }
+    }
+    printf("|%-5s | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",field[0],field[1],field[2],field[3],field[4],field[5],field[6],field[7]);
+    for (i=0;i<k;i++)
+    {
+        if (strcmp(temptableau[i].deleted,"ok")==0){
+            printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",temptableau[i].id,temptableau[i].prenom,temptableau[i].nom,temptableau[i].adresse,temptableau[i].code_postale,temptableau[i].num,temptableau[i].mail,temptableau[i].profession);
+        }
+    }
+}
 void menu(){ /*Fonction faite par Rémi JARA */
     debut : printf("\nChoisis une action a realiser : \n  - Ajout de client --> tapez \"ajout\" \n  - Afficher la base de donnees --> tapez \"afficher\" \n  - Supprimer un client --> tapez \"suppr\"\n  - Rechercher un client --> tapez \"recherche\"\n  - Afficher tous les clients auquels il manque un ou plusieurs champ(s) --> tapez \"manquant\" \n ");
     scanf("%s",&choix);
