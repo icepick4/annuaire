@@ -39,7 +39,8 @@ void tri_code_postale(int choix_sens_tri);
 void tri_nom(int choix_sens_tri);
 void tri_profession(int choix_sens_tri);
 int est_code_postal(char *code_postale);
-int est_zero_ou_un(int choix);
+int est_zero_ou_un(char * choix);
+int est_champ(char * choix_filtre);
 void menu();
 
 #endif

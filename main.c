@@ -6,8 +6,8 @@
 #define MAXTAB 100000
 
 int main(void){
-    remplir(0,0,tableau);
-    menu();
+    remplir(0,0,tableau);/*on remplit le tableau dès le lancement du programme*/
+    menu();/*puis on lance le menu*/
     return 0;
 }
 
