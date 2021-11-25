@@ -9,7 +9,7 @@
 
 void insertion(int t[],int len_t); /*initialisation de la fonction d'algorithme de tri*/
 void ajout();
-void afficher(char *choix_tri);
+void afficher();
 void filtrer(char *choix_filtre,char *filtre,char * choixchoix_filtre);
 int suppr(int supprligne);
 int trouver (char * scanprenom,char * scannom,char * scannum, char *scanmail,int checksuppr,int checkmodifier);
@@ -28,12 +28,16 @@ typedef struct structclient{
     char *deleted;
 }sclient;
 sclient tableau[MAXTAB];
+void modifierclient(int modifierligne);
 void remplir(int modifier, int supprimer, sclient *client);
 void filtre_prenom(char *filtre,char *choixchoix_filtre);
 void filtre_nom(char *filtre,char *choixchoix_filtre);
 void filtre_profession(char *filtre,char *choixchoix_filtre);
 void filtre_code_postale(char *filtre);
 void tri_prenom(int choix_sens_tri);
+void tri_code_postale(int choix_sens_tri);
+void tri_nom(int choix_sens_tri);
+void tri_profession(int choix_sens_tri);
 int est_code_postal(char *code_postale);
 void menu();
 
