@@ -489,15 +489,19 @@ int trouver(char * scanprenom,char * scannom,char * scannum, char *scanmail,int 
             printf("\nClient numero %d : %-3d %-20s | %-26s | %-20s | %-10s | %-20s | %-40s | %-22s \n",k,tableau[liste[k]].id,tableau[liste[k]].prenom,tableau[liste[k]].nom,tableau[liste[k]].adresse,tableau[liste[k]].code_postale,tableau[liste[k]].num,tableau[liste[k]].mail,tableau[liste[k]].profession);
         }
         if (checksuppr){/*si on est dans le cas d'une suppression, on appelle la fonction correspondante*/
-            printf("\nIndiquez quel client vous souhaitez supprimer en rentrant son indice ecrit ci-dessus : ");
-            scanf("%d",&choix);
+            do{
+                printf("\nIndiquez quel client vous souhaitez supprimer en rentrant son indice ecrit ci-dessus : ");
+                scanf("%d",&choix);
+            }while(choix<0 || choix>j+1);
             suppr(liste[choix]);
             printf("Le client a bien ete supprime");
             return 1;
         }
         else if(checkmodifier){/*si on est dans le cas d'une modification, on appelle la fonction correspondante*/
-            printf("\nIndiquez quel client vous souhaitez modifier en rentrant son indice ecrit ci-dessus : ");
-            scanf("%d",&choix);
+            do{
+                printf("\nIndiquez quel client vous souhaitez modifier en rentrant son indice ecrit ci-dessus : ");
+                scanf("%d",&choix);
+            }while(choix<0 || choix>j+1);
             modifierclient(liste[choix]);
             printf("Le client a bien ete modifie");
             return 1;
