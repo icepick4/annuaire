@@ -513,8 +513,15 @@ int trouver(char * scanprenom,char * scannom,char * scannum, char *scanmail,int 
     }
     return 0;
 }
-int suppr(int supprligne){ /*Fonction faite par Rémi JARA*/
+int suppr(int supprligne){
+    int i,j;/*Fonction faite par Rémi JARA*/
+    for (i=0;tableau[i].prenom!=NULL;){
+        i++;                                /*boucle for permettant de trouver le nombre de client dans le tableau*/
+    }
     tableau[supprligne].deleted = "deleted";/*on ajout l'état deleted au client ayant l'id entré en argument*/
+    for (j=supprligne;j<i;j++){
+        tableau[j].id=tableau[j].id-1;
+    }
     return 1;
 }
 void input(int checksuppr,int checkmodifier){ /*Fonction faite par Rémi JARA*/
