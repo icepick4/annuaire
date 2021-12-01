@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "fonc.h"
+#include "fonction.h"
 #include <ctype.h>
 #define T 50
 #define MENU 7

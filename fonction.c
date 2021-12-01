@@ -133,7 +133,7 @@ void ajout(){ /*Fonction faite par Rémi JARA*/
         i++;                                /*boucle for permettant de trouver le nombre de client dans le tableau*/
     }
     char nom[TAILLE_MAX+1],prenom[TAILLE_MAX+1]={"vide"},adresse[TAILLE_MAX+1]={0}, /*initialisation des variables que l'on va ajouter*/
-    code_postale[TAILLE_MAX+1],num[TAILLE_MAX+1],mail[TAILLE_MAX+1],profession[TAILLE_MAX+1];
+    code_postale[TAILLE_MAX+1],num[TAILLE_MAX+1],mail[TAILLE_MAX+1],profession[TAILLE_MAX+1]={"vide"};
     do{
         if(strcmp(prenom,"vide")!=0)printf("Prenom : ");
         fgets(prenom,TAILLE_MAX+1,stdin);
@@ -173,7 +173,7 @@ void ajout(){ /*Fonction faite par Rémi JARA*/
         scanf("%s",mail);
     }while(!(est_mail(mail)));
     do{
-        printf("Profession : ");
+        if(strcmp(profession,"vide")!=0)printf("Profession : ");
         fgets(profession,TAILLE_MAX+1,stdin);
     }while(!(est_vide(profession)));
     for (j=0;profession[j]!='\n';){
@@ -701,7 +701,7 @@ void tri_prenom(int choix_sens_tri){/*Fonction faite par Idrissa SALL*/
     for (i = 0; i < k; i++){
         for (j = 0; j < k; j++){
             if(choix_sens_tri){
-                if (strcmpi(tableau[i].prenom, tableau[j].prenom) < 0&& strcmp(tableau[i].prenom, "*Champ vide*")!=0){
+                if (strcmpr(tableau[i].prenom, tableau[j].prenom) < 0&& strcmpr(tableau[i].prenom, "*Champ vide*")!=0){
                     tempid = tableau[i].id;
                     tempdeleted = tableau[i].deleted;
                     tempprenom = tableau[i].prenom;
@@ -888,6 +888,7 @@ void tri_profession(int choix_sens_tri){/*Fonction faite par Idrissa SALL*/
 }
 void tri_code_postale(int choix_sens_tri){/*Fonction faite par Idrissa SALL*/
 
+
     char *tempprenom, *tempnom, *tempadresse, *tempcode_postale, *tempnum, *tempmail, *tempprofession, *tempdeleted;
     int i, j,k,tempid;
     remplir(0,0,tableau);
@@ -952,6 +953,117 @@ void tri_code_postale(int choix_sens_tri){/*Fonction faite par Idrissa SALL*/
         }
     }
 }
+int strcmpr(char * ch1, char * ch2){/*Fonction faite par Idrissa SALL*//*fonction pour comparer deux chaines*/
+
+
+
+
+    int x=0 ,y=0;
+    while(ch1[x] || ch2[y]){
+        if(ch1[x] != ch2[y]){
+            if(ch1[x] < ch2[y])
+                return -9;
+            if(ch1[x] > ch2[y])
+                return 4;
+        }
+        if(ch1[x] != '\0')
+            x++;
+        if(ch2[y] != '\0')
+            y++;
+    }
+    return 0;
+}
+void commencant(char * tab[], char c[], int taille){/*Fonction faite par Idrissa SALL*//*recherche en debut de mot*/
+
+    int t;
+    t=strlen(c);
+    int i=0;
+    for(i=0; i< taille; i++){
+        if(strnicmp(tab[i],c,t)==0)/*si on veut faire avec casse on peut utiliser strnicmp. sans casse on utilise ma fonction sntncmpr*/
+            printf("%s ",tab[i]);
+    }
+}
+void terminant(char * tab[], char c[], int taille){/*Fonction faite par Idrissa SALL*//*recherche en fin de mot*/
+
+    int t;
+    t=strlen(c);
+    int i=0;
+    for(i=0; i< taille; i++){
+        if(strinvcmpr(tab[i],c,t)==0)
+            printf("%s ",tab[i]);
+    }
+}
+void recherche(char * tab[], char c[], int taille){/*Fonction faite par Idrissa SALL*//*recherche au milieu du mot*/
+
+    int i=0;
+    for(i=0; i< taille; i++){
+        if(strstr(tab[i],c)!=0)
+            printf("%s ",tab[i]);
+    }
+}
+void exclu(char * tab[], char c[], int taille){/*Fonction faite par Idrissa SALL*//*exclure la chaine tapée*/
+
+    int i=0;
+    for(i=0; i< taille; i++){
+        if(strstr(tab[i],c)==0)
+            printf("%s ",tab[i]);
+    }
+}
+int strncmpr(char * ch1, char * ch2, int taille){/*Fonction faite par Idrissa SALL*//*fonction pour comparer deux chaines avec de nombre de car en parametre*/
+
+    int x=0 ,y=0,i=0;
+    if (taille==0)/*pas necessaire le code marche sans mais il faut laisser comme ca*/
+        return 0;
+    while(i<taille){
+        if(ch1[x] != ch2[y]){
+            if(ch1[x] < ch2[y])
+                return -9;
+            if(ch1[x] > ch2[y])
+                return 4;
+        }
+        x++;
+        y++;
+        i++;
+    }
+    return 0;
+}
+int strinvcmpr(char * ch1, char * ch2, int taille){/*Fonction faite par Idrissa SALL*//*fonction pour comparer deux chaines avec de nombre de carac en parametre depuis la fin de chaine*/
+    int x=0 ,y=0,i=0;
+    x=strlen(ch1)-1;
+    y=strlen(ch2)-1;
+    if (taille==0)/*pas necessaire le code marche sans mais il faut laisser comme ca*/
+        return 0;
+    while(i<taille){
+        if(ch1[x] != ch2[y]){
+            if(ch1[x] < ch2[y])
+                return -9;
+            if(ch1[x] > ch2[y])
+                return 4;
+        }
+        x--;
+        y--;
+        i++;
+    }
+    return 0;
+}
+/*void sauvegarder(int choixsauv){
+    switch(choixsauv){
+        case 0:
+            FILE *fichier= fopen(chemin,"a+");
+            if (fichier == NULL)
+            {
+                printf("Erreur de lecture du fichier\n"); /*vérification qu'il n'y a aucune erreur avec le fichier
+                exit(EXIT_FAILURE);
+            }
+
+        case 1:
+
+
+    }
+
+}
+
+*/
 void menu(){ /*Fonction faite par Rémi JARA */
     do{
         printf("\nChoisis une action a realiser : \n  - Ajout de client --> tapez \"ajout\"\n  - Modifier un client --> tapez \"modifier\" \n  - Supprimer un client --> tapez \"suppr\"\n  - Afficher la base de donnees --> tapez \"afficher\" \n  - Rechercher un client --> tapez \"recherche\"\n  - Quitter l'application --> tapez \"stop\"\n");
