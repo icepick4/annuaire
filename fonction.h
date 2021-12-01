@@ -5,7 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 #define TAILLE_MAX 256
-#define MAXTAB 100000
+#define MAXTAB 10000000
 
 typedef struct structclient{
     int id;
@@ -40,6 +40,7 @@ void input(int checksuppr,int checkmodifier);
 int suppr(int supprligne);
 int trouver (char * scanprenom,char * scannom,char * scannum, char *scanmail,int checksuppr,int checkmodifier);
 int est_code_postal(char *code_postale);
+int est_vide (char *mot);
 int est_zero_ou_un(char * choix);
 int est_champ(char * choix_filtre);
 int est_num(char *num);
