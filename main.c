@@ -3,7 +3,6 @@
 #include <string.h>
 #include "fonction.h"
 #define TAILLE_MAX 256
-#define MAXTAB 100000
 
 int main(void){
     remplir(0,0,tableau);/*on remplit le tableau dès le lancement du programme*/

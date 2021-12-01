@@ -5,6 +5,7 @@
 #include <ctype.h>
 #define TAILLE_MAX 256
 #define chemin "annuaire5000_test.csv"
+#define nouveau_chemin "annuaire5000_test_nouveau.csv"
 #define MAXTAB 10000000
 char choix[TAILLE_MAX+1],choix_tri[TAILLE_MAX+1],choix_affiche[TAILLE_MAX+1],
 choixchoix_filtre[TAILLE_MAX+1],choix_filtre[TAILLE_MAX+1],filtre[TAILLE_MAX+1],
@@ -149,7 +150,7 @@ void ajout(){ /*Fonction faite par Rémi JARA*/
     for (j=0;nom[j]!='\n';){
         j++;/*on trouve l'index du dernier caractère*/
     }
-    nom[j-1] = 0;/*on retire le '\n' du champ entré*/
+    nom[j] = 0;/*on retire le '\n' du champ entré*/
     do{
         printf("Ville : ");
         fgets(adresse,TAILLE_MAX+1,stdin);
@@ -157,7 +158,7 @@ void ajout(){ /*Fonction faite par Rémi JARA*/
     for (j=0;adresse[j]!='\n';){
         j++;
     }
-    adresse[j-1] = 0;
+    adresse[j] = 0;
     do{
         printf("Code postale : ");
         scanf("%s",code_postale);
@@ -179,11 +180,14 @@ void ajout(){ /*Fonction faite par Rémi JARA*/
     for (j=0;profession[j]!='\n';){
         j++;
     }
-    profession[j-1] = 0;
+    profession[j] = 0;
 
     tableau[i].id = i+1;
+    majuscule_nom(prenom);
     tableau[i].prenom = copie(prenom);
+    majuscule_nom(nom);
     tableau[i].nom = copie(nom);
+    majuscule_adresse(adresse);
     tableau[i].adresse = copie(adresse);/*on remplit à la dernière place du tableau chaque attribut du client avec ceux scanés*/
     tableau[i].code_postale = copie(code_postale);
     tableau[i].num = copie(num);
@@ -692,6 +696,17 @@ int est_code_postal(char *code_postale){ /*Fonction faite par Rémi JARA*/
     printf("\nCode postale non valide\nNorme des codes postaux : 00000\n");/*sinon on renvoit un message d'erreur*/
     return 0;
 }
+char *majuscule_nom(char *mot){
+    mot[0] = toupper(mot[0]);
+    return mot;
+}
+char *majuscule_adresse(char *mot){
+    int i;
+    for(i=0;i<strlen(mot);i++){
+        mot[i]=toupper(mot[i]);
+    }
+    return mot;
+}
 void tri_prenom(int choix_sens_tri){/*Fonction faite par Idrissa SALL*/
     char *tempprenom, *tempnom, *tempadresse, *tempcode_postale, *tempnum, *tempmail, *tempprofession, *tempdeleted;
     int i,j,k,tempid;
@@ -1046,27 +1061,64 @@ int strinvcmpr(char * ch1, char * ch2, int taille){/*Fonction faite par Idrissa 
     }
     return 0;
 }
-/*void sauvegarder(int choixsauv){
-    switch(choixsauv){
-        case 0:
-            FILE *fichier= fopen(chemin,"a+");
-            if (fichier == NULL)
-            {
-                printf("Erreur de lecture du fichier\n"); /*vérification qu'il n'y a aucune erreur avec le fichier
-                exit(EXIT_FAILURE);
+void sauvegarder(){/*Fonction faite par Rémi JARA*/
+    char choixsauv[1];
+    int choix;
+    do{
+    printf("Comment voulez-vous sauvegarder les modifications ?\n  - Dans un nouveau fichier --> tapez \"1\"\n  - En ecrasant le fichier actuel --> tapez \"0\"\n");
+    scanf("%s",choixsauv);
+    }while(!(est_zero_ou_un(choixsauv)));
+    choix = atoi(choixsauv);
+    FILE *fichiersauv= fopen(nouveau_chemin,"a+");
+    int i=0;
+    if(choix==0){
+        if (fichiersauv == NULL)
+        {
+            printf("Erreur de lecture du fichier\n"); /*vérification qu'il n'y a aucune erreur avec le fichier*/
+            exit(EXIT_FAILURE);
+        }
+        while (tableau[i].prenom!=NULL){
+            if (strcmp(tableau[i].deleted,"deleted")!=0){
+                fprintf(fichiersauv,"%s,%s,%s,%s,%s,%s,%s\n",strcmp(tableau[i].prenom,"*Champ vide*")==0 ? "" : tableau[i].prenom,
+                                                            strcmp(tableau[i].nom,"*Champ vide*")==0 ? "" : tableau[i].nom,
+                                                            strcmp(tableau[i].adresse,"*Champ vide*")==0 ? "" : tableau[i].adresse,
+                                                            strcmp(tableau[i].code_postale,"*Champ vide*")==0 ? "" : tableau[i].code_postale,
+                                                            strcmp(tableau[i].num,"*Champ vide*")==0 ? "" : tableau[i].num,
+                                                            strcmp(tableau[i].mail,"*Champ vide*")==0 ? "" : tableau[i].mail,
+                                                            strcmp(tableau[i].profession,"*Champ vide*")==0 ? "" : tableau[i].profession);
+                i++;
             }
+        }
+        fclose(fichiersauv);
+        remove(chemin);
+        rename(nouveau_chemin, chemin);
 
-        case 1:
-
-
+    }
+    else{
+        if (fichiersauv == NULL)
+        {
+            printf("Erreur de lecture du fichier\n"); /*vérification qu'il n'y a aucune erreur avec le fichier*/
+            exit(EXIT_FAILURE);
+        }
+        while (tableau[i].prenom!=NULL){
+            if (strcmp(tableau[i].deleted,"deleted")!=0){
+                fprintf(fichiersauv,"%s,%s,%s,%s,%s,%s,%s\n",strcmp(tableau[i].prenom,"*Champ vide*")==0 ? "" : tableau[i].prenom,
+                                                            strcmp(tableau[i].nom,"*Champ vide*")==0 ? "" : tableau[i].nom,
+                                                            strcmp(tableau[i].adresse,"*Champ vide*")==0 ? "" : tableau[i].adresse,
+                                                            strcmp(tableau[i].code_postale,"*Champ vide*")==0 ? "" : tableau[i].code_postale,
+                                                            strcmp(tableau[i].num,"*Champ vide*")==0 ? "" : tableau[i].num,
+                                                            strcmp(tableau[i].mail,"*Champ vide*")==0 ? "" : tableau[i].mail,
+                                                            strcmp(tableau[i].profession,"*Champ vide*")==0 ? "" : tableau[i].profession);
+                i++;
+            }
+        }
+        fclose(fichiersauv);
     }
 
 }
-
-*/
 void menu(){ /*Fonction faite par Rémi JARA */
     do{
-        printf("\nChoisis une action a realiser : \n  - Ajout de client --> tapez \"ajout\"\n  - Modifier un client --> tapez \"modifier\" \n  - Supprimer un client --> tapez \"suppr\"\n  - Afficher la base de donnees --> tapez \"afficher\" \n  - Rechercher un client --> tapez \"recherche\"\n  - Quitter l'application --> tapez \"stop\"\n");
+        printf("\nChoisis une action a realiser : \n  - Ajout de client --> tapez \"ajout\"\n  - Modifier un client --> tapez \"modifier\" \n  - Supprimer un client --> tapez \"suppr\"\n  - Afficher la base de donnees --> tapez \"afficher\" \n  - Rechercher un client --> tapez \"recherche\"\n  - Quitter l'application --> tapez \"stop\"\n  - Sauvegarder les modifications --> tapez \"sauvegarder\"\n");
         scanf("%s",choix);/*on scan l'action que l'utilisateur veut réaliser*/
         if (strcmpi(choix, "afficher")==0){
             afficher("non");
@@ -1082,6 +1134,9 @@ void menu(){ /*Fonction faite par Rémi JARA */
         }
         else if (strcmpi(choix,"recherche")==0){
             input(0,0);
+        }
+        else if (strcmpi(choix,"sauvegarder")==0){
+            sauvegarder();
         }
     }while(strcmp(choix,"stop")!=0);
 }

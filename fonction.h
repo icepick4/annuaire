@@ -36,6 +36,7 @@ void tri_prenom(int choix_sens_tri);
 void tri_code_postale(int choix_sens_tri);
 void tri_nom(int choix_sens_tri);
 void tri_profession(int choix_sens_tri);
+void sauvegarder();
 int strcmpr(char * ch1, char * ch2);
 void commencant(char * tab[], char c[], int taille);
 void terminant(char * tab[], char c[], int taille);
@@ -52,5 +53,7 @@ int est_zero_ou_un(char * choix);
 int est_champ(char * choix_filtre);
 int est_num(char *num);
 int est_mail(char *mail);
+char *majuscule_nom(char *mot);
+char *majuscule_adresse(char *mot);
 
 #endif
