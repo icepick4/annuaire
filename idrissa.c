@@ -7,6 +7,16 @@
 #define MENU 7
 #define TAILLE_MAX 256
 #define chemin "annuaire5000_test - Copie.csv"
+/* ma fontion main qui qui va avec les fonctions
+int main()
+{
+    int o=1;
+    while (o !=-1){
+        menu();
+        o=choose();
+    }
+    return 0;
+}*/
 
 
 char * field[7] = {"Prenom:","Nom:","Adresse:","Code Postale:","Numero de telephone:","Adresse Mail:","Profession:"},ligne[TAILLE_MAX+1];
