@@ -5,7 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 #define TAILLE_MAX 256
-#define MAXTAB 10000000
+#define MAXTAB 100000
 
 typedef struct structclient{
     int id;
@@ -42,15 +42,18 @@ void commencant(char c[],int paramfiltre);
 void terminant(char c[],int paramfiltre);
 void recherche(char c[],int paramfiltre);
 void exclu(char c[],int paramfiltre);
+void afficher_client(sclient *tableau,int i);
 int strncmpr(char * ch1, char * ch2, int taille);
 int strinvcmpr(char * ch1, char * ch2, int taille);
+/*int strnicmp(const char*,const char*,size_t);*/
 char* strcase( const char* ch1, const char* ch2 );
 void input(int checksuppr,int checkmodifier);
 int suppr(int supprligne);
-int trouver (char * scanprenom,char * scannom,char * scannum, char *scanmail,int checksuppr,int checkmodifier);
+int trouver (char scanprenom[],char scannom[],char scannum[], char scanmail[],int checksuppr,int checkmodifier);
 int est_code_postal(char *code_postale);
+int est_choix_filtre(char *choix);
 int est_vide (char *mot);
-int est_fichier(char *fichier);
+int est_fichier(char fichier[]);
 int est_zero_ou_un(char * choix);
 int est_champ(char * choix_filtre);
 int est_num(char *num);
