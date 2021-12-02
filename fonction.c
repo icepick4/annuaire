@@ -289,34 +289,67 @@ void afficher(){ /*Fonction faite par Rémi JARA*/
     }
     else if (strcmpi(choix_affiche,"filtre")==0){
         do{
-        printf("Voulez vous filtrer avec la premiere lettre ou un champ precis ?\n  - Pour une seule lettre --> tapez \"oui\" \n  - Pour un champ precis --> tapez \"non\"\n");
-        scanf("%s",choixchoix_filtre);
-        }while(strcmp(choixchoix_filtre,"oui")!=0 && strcmp(choixchoix_filtre,"non")!=0);/*on scan la précision du filtre, avec vérification*/
-
-        do{
         printf("Par quel champ voulez vous filtrer ? \n  - Pour un filtre par prenom --> tapez \"prenom\" \n  - Pour un filtre par nom --> tapez \"nom\" \n  - Pour un filtre par profession --> tapez \"profession\"\n  - Pour un filtre par code postale --> tapez \"code_postale\" \n");
         scanf("%s",choix_filtre);
         }while(!(est_champ(choix_filtre)));/*on scan le champ à filtrer*/
+        char param_filtre[TAILLE_MAX+1];
+        int temp;
+        do{
+        printf("Quel filtre souhaitez-vous ? :  - Champ commençant par le filtre --> tapez \"0\"\n  - Champ contenant le filtre --> tapez \"1\"\n  - Champ se terminant par le filtre --> tapez \"2\"\n  - Champ ne contenant pas le filtre --> tapez \"3\"\n");
+        scanf("%s",param_filtre);
+        }while(!(est_choix_filtre(param_filtre)));
+        temp = atoi(param_filtre);
         if (strcmpi(choix_filtre,"code_postale")==0){
             while(!(est_code_postal(filtre))){
                 printf("Indiquez le filtre que vous souhaitez appliquer : ");
                 scanf("%s",filtre);
             }/*on scan le filtre tant que c'est bien un code postale avec la fonction est_code_postale*/
-            filtre_code_postale(filtre);
+            switch(temp){
+                case 0:
+                    commencant(filtre,2);
+                    break;
+                case 1:
+                    recherche(filtre,2);
+                case 2:
+                    terminant(filtre,2);
+                    break;
+                 case 3:
+                    exclu(filtre,2);
+                    break;
+                 default:
+                    printf("ERREUR");
+                    break;
+            }
         }
         else if (strcmpi(choix_filtre,"prenom")==0){
             do{
                 if(strcmp(filtre,"\n")==0)printf("Indiquez le filtre que vous souhaitez appliquer : ");
                 fgets(filtre,TAILLE_MAX+1,stdin);
-                if(!(est_vide(filtre)))printf("errror");
+                if(!(est_vide(filtre)));
             }while(!(est_vide(filtre)));
             for (i=0;filtre[i]!='\n';){
                 i++;
             }
             filtre[i]=0;
-            filtre_prenom(filtre,choixchoix_filtre);
+            switch(temp){
+                case 0:
+                    commencant(filtre,0);
+                    break;
+                case 1:
+                    recherche(filtre,0);
+                case 2:
+                    terminant(filtre,0);
+                    break;
+                case 3:
+                    exclu(filtre,0);
+                    break;
+                 default:
+                    printf("ERREUR");
+                    break;
+            }
         }
         else if (strcmpi(choix_filtre,"nom")==0){
+
             do{
                 if(strcmp(filtre,"\n")==0)printf("Indiquez le filtre que vous souhaitez appliquer : ");
                 fgets(filtre,TAILLE_MAX+1,stdin);
@@ -325,8 +358,23 @@ void afficher(){ /*Fonction faite par Rémi JARA*/
             for (i=0;filtre[i]!='\n';){
                 i++;
             }
-            filtre[i-1]=0;
-            filtre_nom(filtre,choixchoix_filtre);/*on applique le filtre voulu*/
+            filtre[i]=0;
+            switch(temp){
+                case 0:
+                    commencant(filtre,1);
+                    break;
+                case 1:
+                    recherche(filtre,1);
+                case 2:
+                    terminant(filtre,1);
+                    break;
+                case 3:
+                    exclu(filtre,1);
+                    break;
+                 default:
+                    printf("ERREUR");
+                    break;
+            }/*on applique le filtre voulu*/
         }
         else{
             do{
@@ -336,8 +384,23 @@ void afficher(){ /*Fonction faite par Rémi JARA*/
             for (i=0;filtre[i]!='\n';){
                 i++;
             }
-            filtre[i-1]=0;
-            filtre_profession(filtre,choixchoix_filtre);
+            filtre[i]=0;
+            switch(temp){
+                case 0:
+                    commencant(filtre,3);
+                    break;
+                case 1:
+                    recherche(filtre,3);
+                case 2:
+                    terminant(filtre,3);
+                    break;
+                case 3:
+                    exclu(filtre,3);
+                    break;
+                 default:
+                    printf("ERREUR");
+                    break;
+            }
         }
     }
     else{
@@ -635,6 +698,13 @@ int est_zero_ou_un(char *choix){/*Fonction faite par Rémi JARA*//*fonction qui r
     printf("\nErreur dans la selection\n");
     return 0;
 }
+int est_choix_filtre(char *choix){/*Fonction faite par Rémi JARA*//*fonction qui renvoit 1 si la valeur passé en argument est un 0 ou un 1, renvoit 0 sinon*/
+    if (strcmp(choix,"0")==0 || strcmp(choix,"1")==0 || strcmp(choix,"2")==0 || strcmp(choix,"3")==0 ){
+        return 1;
+    }
+    printf("\nErreur dans la selection\n");
+    return 0;
+}
 int est_num(char *num){ /*Fonction faite par Rémi JARA*/
     int i,ctrcheck = 0;/*fonction qui renvoit 1 si la valeur passé en argument est un numéro de téléphone valide, 0 sinon*/
     for (i=0;i<14;i++){/*boucle qui parcourt le numéro*/
@@ -695,6 +765,20 @@ int est_code_postal(char *code_postale){ /*Fonction faite par Rémi JARA*/
     }
     printf("\nCode postale non valide\nNorme des codes postaux : 00000\n");/*sinon on renvoit un message d'erreur*/
     return 0;
+}
+int est_fichier(char *fichier){
+    int i,j;
+    char *carac[10]={"<",">",":","\"","|","?","*",".","\\","/"};
+    int taille = strlen(fichier);
+    for(i=0;i<taille;i++){
+        for(j=0;j<8;j++){
+            if (strcmp(fichier[i],carac[j])==0){
+                printf("Erreur dans la sélection du nom du fichier\nLe nom ne peut pas contenir les caractères suivants : / \\ : ? . : | < > * \"");
+                return 0;
+            }
+        }
+    }
+    return 1;
 }
 char *majuscule_nom(char *mot){
     mot[0] = toupper(mot[0]);
@@ -988,41 +1072,221 @@ int strcmpr(char * ch1, char * ch2){/*Fonction faite par Idrissa SALL*//*fonctio
     }
     return 0;
 }
-void commencant(char * tab[], char c[], int taille){/*Fonction faite par Idrissa SALL*//*recherche en debut de mot*/
-
-    int t;
+void commencant(char c[],int paramfiltre){/*Fonction faite par Idrissa SALL*//*recherche en debut de mot*/
+    int t,j;
+    for (j=0;tableau[j].prenom!=NULL;){
+        j++;                                /*boucle for permettant de trouver le nombre de client dans le tableau*/
+    }
     t=strlen(c);
     int i=0;
-    for(i=0; i< taille; i++){
-        if(strnicmp(tab[i],c,t)==0)/*si on veut faire avec casse on peut utiliser strnicmp. sans casse on utilise ma fonction sntncmpr*/
-            printf("%s ",tab[i]);
+    switch(paramfiltre){
+        case 0:
+            for(i=0; i< j; i++){
+                if(strnicmp(tableau[i].prenom,c,t)==0){/*si on veut faire avec casse on peut utiliser strnicmp. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        case 1:
+            for(i=0; i< j; i++){
+                if(strnicmp(tableau[i].nom,c,t)==0){/*si on veut faire avec casse on peut utiliser strnicmp. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        case 2:
+            for(i=0; i< j; i++){
+                if(strnicmp(tableau[i].code_postale,c,t)==0){/*si on veut faire avec casse on peut utiliser strnicmp. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        case 3:
+            for(i=0; i< j; i++){
+                if(strnicmp(tableau[i].profession,c,t)==0){/*si on veut faire avec casse on peut utiliser strnicmp. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        default:
+            break;
     }
 }
-void terminant(char * tab[], char c[], int taille){/*Fonction faite par Idrissa SALL*//*recherche en fin de mot*/
-
-    int t;
+void terminant(char c[],int paramfiltre){/*Fonction faite par Idrissa SALL*//*recherche en fin de mot*/
+    int t,j;
+    for (j=0;tableau[j].prenom!=NULL;){
+        j++;                                /*boucle for permettant de trouver le nombre de client dans le tableau*/
+    }
     t=strlen(c);
     int i=0;
-    for(i=0; i< taille; i++){
-        if(strinvcmpr(tab[i],c,t)==0)
-            printf("%s ",tab[i]);
+    switch(paramfiltre){
+        case 0:
+            for(i=0; i< j; i++){
+                if(strinvcmpr(tableau[i].prenom,c,t)==0){/*si on veut faire avec casse on peut utiliser strinvcmpr. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        case 1:
+            for(i=0; i< j; i++){
+                if(strinvcmpr(tableau[i].nom,c,t)==0){/*si on veut faire avec casse on peut utiliser strinvcmpr. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        case 2:
+            for(i=0; i< j; i++){
+                if(strinvcmpr(tableau[i].code_postale,c,t)==0){/*si on veut faire avec casse on peut utiliser strinvcmpr. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        case 3:
+            for(i=0; i< j; i++){
+                if(strinvcmpr(tableau[i].profession,c,t)==0){/*si on veut faire avec casse on peut utiliser strinvcmpr. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        default:
+            break;
     }
 }
-void recherche(char * tab[], char c[], int taille){/*Fonction faite par Idrissa SALL*//*recherche au milieu du mot*/
-
+void recherche(char c[],int paramfiltre){/*Fonction faite par Idrissa SALL*//*recherche au milieu du mot*/
+    int j;
+    for (j=0;tableau[j].prenom!=NULL;){
+        j++;                                /*boucle for permettant de trouver le nombre de client dans le tableau*/
+    }
     int i=0;
-    for(i=0; i< taille; i++){
-        if(strstr(tab[i],c)!=0)
-            printf("%s ",tab[i]);
+    switch(paramfiltre){
+        case 0:
+            for(i=0; i< j; i++){
+                if(strstr(tableau[i].prenom,c)!=0){/*si on veut faire avec casse on peut utiliser strstr. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        case 1:
+            for(i=0; i< j; i++){
+                if(strstr(tableau[i].nom,c)!=0){/*si on veut faire avec casse on peut utiliser strstr. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        case 2:
+            for(i=0; i< j; i++){
+                if(strstr(tableau[i].code_postale,c)!=0){/*si on veut faire avec casse on peut utiliser strstr. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        case 3:
+            for(i=0; i< j; i++){
+                if(strstr(tableau[i].profession,c)!=0){/*si on veut faire avec casse on peut utiliser strstr. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        default:
+            break;
     }
 }
-void exclu(char * tab[], char c[], int taille){/*Fonction faite par Idrissa SALL*//*exclure la chaine tapée*/
-
-    int i=0;
-    for(i=0; i< taille; i++){
-        if(strstr(tab[i],c)==0)
-            printf("%s ",tab[i]);
+void exclu(char c[],int paramfiltre){/*Fonction faite par Idrissa SALL*//*exclure la chaine tapée*/
+    int j;
+    for (j=0;tableau[j].prenom!=NULL;){
+        j++;                                /*boucle for permettant de trouver le nombre de client dans le tableau*/
     }
+    int i=0;
+    switch(paramfiltre){
+        case 0:
+            for(i=0; i< j; i++){
+                if(strcase(tableau[i].prenom,c)==0){/*si on veut faire avec casse on peut utiliser strstr. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        case 1:
+            for(i=0; i< j; i++){
+                if(strcase(tableau[i].nom,c)==0){/*si on veut faire avec casse on peut utiliser strstr. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        case 2:
+            for(i=0; i< j; i++){
+                if(strcase(tableau[i].code_postale,c)==0){/*si on veut faire avec casse on peut utiliser strstr. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        case 3:
+            for(i=0; i< j; i++){
+                if(strcase(tableau[i].profession,c)==0){/*si on veut faire avec casse on peut utiliser strstr. sans casse on utilise ma fonction sntncmpr*/
+                    if (strcmpi(tableau[i].deleted,"ok")==0){/*on affiche chaque champ de chaque client du tableau*/
+                        printf("|%-5d | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",tableau[i].id,tableau[i].prenom,tableau[i].nom,tableau[i].adresse,tableau[i].code_postale,tableau[i].num,tableau[i].mail,tableau[i].profession);
+                    }
+                }
+            }
+            break;
+        default:
+            break;
+    }
+}
+char* strcase( const char* ch1, const char* ch2 ){
+    const char* pt1 = ch1 ;
+    const char* pt2 = ch2 ;
+    const char* r = *pt2 == 0 ? ch1 : 0 ;
+
+    while( *pt1 != 0 && pt2 != 0 ){
+        if( tolower( (unsigned char)*pt1 ) == tolower( (unsigned char)*pt2 ) ){
+            if( r == 0 )
+                r = pt1 ;
+            pt2++ ;
+        }
+        else{
+            pt2 = ch2 ;
+            if( r != 0 )
+                pt1 = r + 1 ;
+            if( tolower( (unsigned char)*pt1 ) == tolower( (unsigned char)*pt2 ) ){
+                r = pt1 ;
+                pt2++ ;
+            }
+            else
+                r = 0 ;
+        }
+        pt1++ ;
+    }
+    return pt2 == 0 ? (char*)r : 0 ;
 }
 int strncmpr(char * ch1, char * ch2, int taille){/*Fonction faite par Idrissa SALL*//*fonction pour comparer deux chaines avec de nombre de car en parametre*/
 
@@ -1069,9 +1333,9 @@ void sauvegarder(){/*Fonction faite par Rémi JARA*/
     scanf("%s",choixsauv);
     }while(!(est_zero_ou_un(choixsauv)));
     choix = atoi(choixsauv);
-    FILE *fichiersauv= fopen(nouveau_chemin,"a+");
     int i=0;
     if(choix==0){
+        FILE *fichiersauv= fopen(nouveau_chemin,"a+");
         if (fichiersauv == NULL)
         {
             printf("Erreur de lecture du fichier\n"); /*vérification qu'il n'y a aucune erreur avec le fichier*/
@@ -1095,6 +1359,19 @@ void sauvegarder(){/*Fonction faite par Rémi JARA*/
 
     }
     else{
+
+        char nomfichier[TAILLE_MAX+1];
+        do{
+            if(strcmp(nomfichier,"vide")!=0)printf("Choisissez un nom de fichier : ");
+            fgets(nomfichier,TAILLE_MAX+1,stdin);
+        }while(!(est_vide(nomfichier)));
+        for (i=0;nomfichier[i]!='\n';){
+                i++;
+            }
+        nomfichier[i]=0;
+        strcat(nomfichier,".csv");
+        printf("%s",nomfichier);
+        FILE *fichiersauv= fopen(nomfichier,"a+");
         if (fichiersauv == NULL)
         {
             printf("Erreur de lecture du fichier\n"); /*vérification qu'il n'y a aucune erreur avec le fichier*/

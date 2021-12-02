@@ -4,34 +4,47 @@
 	<ActiveTarget name="Release" />
 	<File name="fonction.c" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="10204" topLine="95" />
+			<Cursor1 position="19029" topLine="249" />
 		</Cursor>
 		<Folding>
-			<Collapse line="15" />
-			<Collapse line="99" />
-			<Collapse line="108" />
-			<Collapse line="365" />
-			<Collapse line="380" />
-			<Collapse line="396" />
-			<Collapse line="412" />
-			<Collapse line="428" />
-			<Collapse line="528" />
-			<Collapse line="567" />
-			<Collapse line="578" />
-			<Collapse line="604" />
+			<Collapse line="16" />
+			<Collapse line="100" />
+			<Collapse line="109" />
+			<Collapse line="369" />
+			<Collapse line="384" />
+			<Collapse line="400" />
+			<Collapse line="416" />
+			<Collapse line="432" />
+			<Collapse line="532" />
+			<Collapse line="571" />
+			<Collapse line="582" />
+			<Collapse line="608" />
+			<Collapse line="615" />
+			<Collapse line="630" />
+			<Collapse line="637" />
+			<Collapse line="659" />
+			<Collapse line="685" />
+			<Collapse line="709" />
+			<Collapse line="773" />
+			<Collapse line="838" />
+			<Collapse line="903" />
+			<Collapse line="970" />
+			<Collapse line="1000" />
+			<Collapse line="1010" />
+			<Collapse line="1018" />
+			<Collapse line="1026" />
+			<Collapse line="1044" />
+			<Collapse line="1063" />
 		</Folding>
-	</File>
-	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="285" topLine="0" />
-		</Cursor>
 	</File>
 	<File name="fonction.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="615" topLine="16" />
+			<Cursor1 position="1866" topLine="32" />
 		</Cursor>
-		<Folding>
-			<Collapse line="9" />
-		</Folding>
+	</File>
+	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="262" topLine="0" />
+		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
