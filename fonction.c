@@ -296,7 +296,6 @@ void afficher(){ /*Fonction faite par Remi JARA*/
         int temp;
         do{
         printf("Quel filtre souhaitez-vous ? \n  - Champ commencant par le filtre --> tapez \"0\"\n  - Champ contenant le filtre --> tapez \"1\"\n  - Champ se terminant par le filtre --> tapez \"2\"\n  - Champ ne contenant pas le filtre --> tapez \"3\"\n");
-        printf("Quel filtre souhaitez-vous ? \n  - Champ commencant par le filtre --> tapez \"0\"\n  - Champ contenant le filtre --> tapez \"1\"\n  - Champ se terminant par le filtre --> tapez \"2\"\n  - Champ ne contenant pas le filtre --> tapez \"3\"\n");
         scanf("%s",param_filtre);
         }while(!(est_choix_filtre(param_filtre)));
         temp = atoi(param_filtre);
@@ -1270,13 +1269,12 @@ void sauvegarder(){/*Fonction faite par Remi JARA*/
         fclose(fichiersauv);
         remove(chemin);
         rename(nouveau_chemin, chemin);
-
     }
     else{
 
-        char nomfichier[200];
+        char nomfichier[200]={"vide"};
         do{
-            printf("Choisissez un nom de fichier : ");
+            if (strcmp(nomfichier,"vide")!=0)printf("Choisissez un nom de fichier : ");
             fgets(nomfichier,200,stdin);
         }while(!(est_vide(nomfichier)&&est_fichier(nomfichier)));
         for (i=0;nomfichier[i]!='\n';){
