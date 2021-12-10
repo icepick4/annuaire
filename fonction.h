@@ -19,7 +19,7 @@ typedef struct structclient{
     char *deleted;
 }sclient;
 sclient tableau[MAXTAB];
-
+char *strdupp (const char *s);
 char *copie(char *str);
 char * strtok_empty (char * str, char const * sep);
 void ajout();

@@ -296,7 +296,6 @@ void afficher(){ /*Fonction faite par Remi JARA*/
         int temp;
         do{
         printf("Quel filtre souhaitez-vous ? \n  - Champ commencant par le filtre --> tapez \"0\"\n  - Champ contenant le filtre --> tapez \"1\"\n  - Champ se terminant par le filtre --> tapez \"2\"\n  - Champ ne contenant pas le filtre --> tapez \"3\"\n");
-        printf("Quel filtre souhaitez-vous ? \n  - Champ commencant par le filtre --> tapez \"0\"\n  - Champ contenant le filtre --> tapez \"1\"\n  - Champ se terminant par le filtre --> tapez \"2\"\n  - Champ ne contenant pas le filtre --> tapez \"3\"\n");
         scanf("%s",param_filtre);
         }while(!(est_choix_filtre(param_filtre)));
         temp = atoi(param_filtre);
@@ -333,7 +332,6 @@ void afficher(){ /*Fonction faite par Remi JARA*/
                 if(strcmp(filtre,"\n")==0)printf("Indiquez le filtre que vous souhaitez appliquer : ");
                 fgets(filtre,TAILLE_MAX+1,stdin);
             }while(!(est_vide(filtre)));
-            printf("%s%d",filtre,strlen(filtre));
             for (i=0;filtre[i]!='\n';){
                 i++;
             }
@@ -592,10 +590,29 @@ int suppr(int supprligne){/*Fonction faite par Remi JARA*/
 void input(int checksuppr,int checkmodifier){ /*Fonction faite par Remi JARA*/
     char verif[TAILLE_MAX+1];/*fonction permettant de recuperer un nom un prenom et une adresse mail ou un numero de telephone pour faire des recherches*/
     char num[TAILLE_MAX+1]="0",mail[TAILLE_MAX+1]="0",nom[TAILLE_MAX+1],prenom[TAILLE_MAX+1];
+    int i,j;
     printf("Entrez le prenom du client que vous cherchez : ");
-    scanf("%s",prenom);
+    fgets(prenom,TAILLE_MAX+1,stdin);
     printf("Entrez le nom du client que vous cherchez : ");
-    scanf("%s",nom);/*on scan le prenom et le nom du client voulu*/
+    fgets(nom,TAILLE_MAX+1,stdin);/*on scan le prenom et le nom du client voulu*/
+    if(prenom[0]=='\n'){
+        strcpy(prenom,"*Champ vide*");
+    }
+    else{
+        for (i=0;prenom[i]!='\n';){
+            i++;
+        }
+        prenom[i] = 0;
+    }
+    if(nom[0]=='\n'){
+        strcpy(nom,"*Champ vide*");
+    }
+    else{
+        for (i=0;nom[i]!='\n';){
+            i++;
+        }
+        nom[i] = 0;
+    }
     do{
     printf("Souhaitez vous entrer son email ou son numero de telephone ? \nPour l'email--> tapez \"mail\"\nPour le numero de telephone --> tapez \"tel\"\n");
     scanf("%s",verif);
@@ -1275,9 +1292,9 @@ void sauvegarder(){/*Fonction faite par Remi JARA*/
     }
     else{
 
-        char nomfichier[200];
+        char nomfichier[200]={"vide"};
         do{
-            printf("Choisissez un nom de fichier : ");
+            if (strcmp(nomfichier,"vide")!=0)printf("Choisissez un nom de fichier : ");
             fgets(nomfichier,200,stdin);
         }while(!(est_vide(nomfichier)&&est_fichier(nomfichier)));
         for (i=0;nomfichier[i]!='\n';){
@@ -1285,7 +1302,7 @@ void sauvegarder(){/*Fonction faite par Remi JARA*/
         }
         nomfichier[i]=0;
         strcat(nomfichier,".csv");
-        printf("\nVotre fichier %s a bien ete enregistre",nomfichier);
+        printf("\nVotre fichier %s a bien ete enregistre\n",nomfichier);
         FILE *fichiersauv= fopen(nomfichier,"a+");
         if (fichiersauv == NULL)
         {
@@ -1312,7 +1329,8 @@ void sauvegarder(){/*Fonction faite par Remi JARA*/
 void menu(){ /*Fonction faite par Remi JARA */
     do{
         printf("\nChoisis une action a realiser : \n  - Ajout de client --> tapez \"ajout\"\n  - Modifier un client --> tapez \"modifier\" \n  - Supprimer un client --> tapez \"suppr\"\n  - Afficher la base de donnees --> tapez \"afficher\" \n  - Rechercher un client --> tapez \"recherche\"\n  - Quitter l'application --> tapez \"stop\"\n  - Sauvegarder les modifications --> tapez \"sauvegarder\"\n");
-        scanf("%s",choix);/*on scan l'action que l'utilisateur veut realiser*/
+        /*scanf("%s",choix);*//*on scan l'action que l'utilisateur veut realiser*/
+        gets(choix);
         if (strcmpi(choix, "afficher")==0){
             afficher("non");
         }
