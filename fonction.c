@@ -9,23 +9,23 @@
 #define MAXTAB 100000
 char choix[TAILLE_MAX+1],choix_tri[TAILLE_MAX+1],choix_affiche[TAILLE_MAX+1],
 choixchoix_filtre[TAILLE_MAX+1],choix_filtre[TAILLE_MAX+1],filtre[TAILLE_MAX+1],
-choix_affichage[TAILLE_MAX+1],ligne[TAILLE_MAX+1]; /*initialisation des variables chaine de caractËres*/
+choix_affichage[TAILLE_MAX+1],ligne[TAILLE_MAX+1]; /*initialisation des variables chaine de caract√®res*/
 char * champ[8] = {"Id : ","Prenom : ","Nom : ","Adresse : ","Code Postale : ","Numero de telephone : ","Adresse Mail : ","Profession : "}; /*initialisation des champs d'un client*/
 const char *sep = ",";
 char *token; /*initialisation du token et du separateur*/
 sclient tableau[MAXTAB];
 void remplir(int modifier, int supprimer,sclient *client){ /*Fonction faite par Remi JARA*/
     FILE *fichier= fopen(chemin,"a+"); /*On ouvre le fichier csv*/
-    int i=0; /* compteur qui correspond ‡ l'id d'un client*/
+    int i=0; /* compteur qui correspond √† l'id d'un client*/
     if (modifier == 0 && supprimer == 0){
         if (fichier == NULL)
         {
             printf("Erreur de lecture du fichier\n"); /*verification qu'il n'y a aucune erreur avec le fichier*/
             exit(EXIT_FAILURE);
         }
-        while(fgets(ligne,TAILLE_MAX+1,fichier)){/* on recupËre chaque ligne du fichier dans la variable ligne*/
+        while(fgets(ligne,TAILLE_MAX+1,fichier)){/* on recup√®re chaque ligne du fichier dans la variable ligne*/
             char * token = strtok_empty(ligne, "," ); /*on separe chaque champ de la ligne avec le separateur "," pour les recuperer dans la variable token*/
-            int j = 0; /*compteur qui correspond ‡ l'indice du champ actuel, respectivement : prenom, nom, adresse, code postale, numero de tel, mail, metier*/
+            int j = 0; /*compteur qui correspond √† l'indice du champ actuel, respectivement : prenom, nom, adresse, code postale, numero de tel, mail, metier*/
             while (token){ /*on boucle tant que le token n'est pas vide*/
                 /*condition permettant de remplir le bon attribut de la structure client passe en argument*/
                 if (j==0){
@@ -76,7 +76,7 @@ void remplir(int modifier, int supprimer,sclient *client){ /*Fonction faite par 
                         client[i].mail = copie("*Champ vide*");
                     }
                 }
-                else if (j==6){/*pour le metier, on s'assure que s'il est vide, son dernier caractËres devienne un '\0'*/
+                else if (j==6){/*pour le metier, on s'assure que s'il est vide, son dernier caract√®res devienne un '\0'*/
                     if (token[strlen(token)-1]=='\n'){
                         token[strlen(token)-1]='\0';
                     }
@@ -98,7 +98,7 @@ void remplir(int modifier, int supprimer,sclient *client){ /*Fonction faite par 
         fclose(fichier);/*on ferme notre fichier il est desormais rempli*/
     }
 }
-char *copie(char *str){/*Fonction trouvÈ sur internet, implÈmentation de la fonction strdup*/
+char *copie(char *str){/*Fonction trouv√© sur internet, impl√©mentation de la fonction strdup*/
     int len_str = strlen(str) + 1;
     char *copie = malloc(len_str);
     if(copie)
@@ -148,7 +148,7 @@ void ajout(){ /*Fonction faite par Remi JARA*/
         fgets(nom,TAILLE_MAX+1,stdin); /*on verifie que les champs entres ne sont pas vide avec la fonction est_vide*/
     }while(!(est_vide(nom)));
     for (j=0;nom[j]!='\n';){
-        j++;/*on trouve l'index du dernier caractËre*/
+        j++;/*on trouve l'index du dernier caract√®re*/
     }
     nom[j] = 0;/*on retire le '\n' du champ entre*/
     do{
@@ -188,7 +188,7 @@ void ajout(){ /*Fonction faite par Remi JARA*/
     majuscule_nom(nom);
     tableau[i].nom = copie(nom);
     majuscule_adresse(adresse);
-    tableau[i].adresse = copie(adresse);/*on remplit ‡ la derniËre place du tableau chaque attribut du client avec ceux scanes*/
+    tableau[i].adresse = copie(adresse);/*on remplit √† la derni√®re place du tableau chaque attribut du client avec ceux scanes*/
     tableau[i].code_postale = copie(code_postale);
     tableau[i].num = copie(num);
     tableau[i].mail = copie(mail);
@@ -291,7 +291,7 @@ void afficher(){ /*Fonction faite par Remi JARA*/
         do{
         printf("Par quel champ voulez vous filtrer ? \n  - Pour un filtre par prenom --> tapez \"prenom\" \n  - Pour un filtre par nom --> tapez \"nom\" \n  - Pour un filtre par profession --> tapez \"profession\"\n  - Pour un filtre par code postale --> tapez \"code_postale\" \n");
         scanf("%s",choix_filtre);
-        }while(!(est_champ(choix_filtre)));/*on scan le champ ‡ filtrer*/
+        }while(!(est_champ(choix_filtre)));/*on scan le champ √† filtrer*/
         char param_filtre[TAILLE_MAX+1];
         int temp;
         do{
@@ -411,12 +411,12 @@ void afficher(){ /*Fonction faite par Remi JARA*/
     else{
         int j,i,k=0;
         for (j=0;tableau[j].prenom!=NULL;){
-            j++;                                /*on recupËre le nombre de client dans le tableau */
+            j++;                                /*on recup√®re le nombre de client dans le tableau */
         }
         printf("|%-5s | %-20s | %-26s | %-22s | %-16s | %-23s | %-40s | %-22s \n",champ[0],champ[1],champ[2],champ[3],champ[4],champ[5],champ[6],champ[7]);
         /*on print les champs pour plus de comprehension*/
         printf("%s",choix_affiche);
-        for (i=0;i<j;i++) /*boucle allant de i valant 0 ‡ j vallant le nombre de client dans le tableau*/
+        for (i=0;i<j;i++) /*boucle allant de i valant 0 √† j vallant le nombre de client dans le tableau*/
         {
 
             if (strcmpi(choix_affiche,"manquant")!=0){
@@ -442,7 +442,7 @@ void afficher_client(sclient *tableau,int i){/*Fonction faite par Remi JARA*/
 }
 void modifierclient(int modifierligne){/*Fonction faite par Remi JARA*/
     int tableauChoix[7],i=0,j,nouveau_choix;/*on initialise un tableau permettant de savoir quel(s) champ(s) modifier et deux compteur
-                                        et la variable nouveau_choix qui permet de selectionner les champ ‡ modifier en amont*/
+                                        et la variable nouveau_choix qui permet de selectionner les champ √† modifier en amont*/
     char choix[TAILLE_MAX+1];
     printf("Quel champs voulez vous modifier ?\n");
     do{
@@ -454,7 +454,7 @@ void modifierclient(int modifierligne){/*Fonction faite par Remi JARA*/
     i++;
     do{
     printf("Nom ?\n  - Oui --> tapez \"1\"\n  - Non --> tapez \"0\"\n");       /*si on veut modifier le champ demande, on rentre 1, sinon 0*/
-    scanf("%s",choix);                                                        /*cette valeur est alors envoye dans le tableau ‡ son indice correspondant*/
+    scanf("%s",choix);                                                        /*cette valeur est alors envoye dans le tableau √† son indice correspondant*/
     }while(!(est_zero_ou_un(choix)));
     nouveau_choix = atoi(choix);
     tableauChoix[i] = nouveau_choix;
@@ -568,7 +568,7 @@ void modifierclient(int modifierligne){/*Fonction faite par Remi JARA*/
 }
 int trouver(char scanprenom[],char scannom[],char scannum[], char scanmail[],int verif_suppr,int verif_modifier){ /*Fonction faite par Remi JARA*/
     int i,j=0,choix;/*initialisation des compteurs et du choix de client*/
-    int liste[MAXTAB];/*initialisation du tableau qui va contenir les clients correspondant ‡ la recherche*/
+    int liste[MAXTAB];/*initialisation du tableau qui va contenir les clients correspondant √† la recherche*/
     for (i=0;tableau[i].prenom!=NULL;i++){
         if (strcmpi(tableau[i].prenom,scanprenom)==0 && strcmpi(tableau[i].nom,scannom)==0 && (strcmpi(tableau[i].num,scannum)==0 || strcmpi(tableau[i].mail,scanmail)==0)){
             liste[j] = tableau[i].id - 1;/*en parcourant tout le tableau, si on verifie les conditions de recherche (nom*prenom*(mail+mail)) on rentre l'id des clients dans notre liste*/
@@ -577,7 +577,7 @@ int trouver(char scanprenom[],char scannom[],char scannum[], char scanmail[],int
     }
     int k;
     if (j>0){
-        for(k=0;k<j;k++){/*on affiche tout les clients correspondant ‡ la recherche*/
+        for(k=0;k<j;k++){/*on affiche tout les clients correspondant √† la recherche*/
             printf("\nClient numero %d : %-3d %-20s | %-26s | %-20s | %-10s | %-20s | %-40s | %-22s \n",k,tableau[liste[k]].id,tableau[liste[k]].prenom,tableau[liste[k]].nom,tableau[liste[k]].adresse,tableau[liste[k]].code_postale,tableau[liste[k]].num,tableau[liste[k]].mail,tableau[liste[k]].profession);
         }
         if (verif_suppr){/*si on est dans le cas d'une suppression, on appelle la fonction correspondante*/
@@ -663,7 +663,7 @@ void saisie_client(int verif_suppr,int verif_modifier){ /*Fonction faite par Rem
 }
 int est_champ(char * choix_filtre){/*Fonction faite par Remi JARA*//*fonction qui renvoit 1 si la valeur passe en argument est un champ valide, 0 sinon*/
     if (strcmpi(choix_filtre,"prenom")!=0&&strcmpi(choix_filtre,"nom")!=0&&strcmpi(choix_filtre,"profession")!=0&&strcmpi(choix_filtre,"code_postale")!=0){
-        printf("\nErreur de selection de champ a filtrer\n");/* si l'un des champs entrÈ n'est pas l'un des demandÈ, on renvoit une erreur et rÈpËte la demande*/
+        printf("\nErreur de selection de champ a filtrer\n");/* si l'un des champs entr√© n'est pas l'un des demand√©, on renvoit une erreur et r√©p√®te la demande*/
         return 0;
     }
     return 1;
@@ -671,14 +671,14 @@ int est_champ(char * choix_filtre){/*Fonction faite par Remi JARA*//*fonction qu
 int est_vide (char *mot){/*Fonction faite par Remi JARA*/
     int i,j=0;
     if (strcmp(mot,"\n")==0 || mot == NULL){
-        return 0;/*si le mot vaut NULL ou retour ‡ la ligne, il est vide*/
+        return 0;/*si le mot vaut NULL ou retour √† la ligne, il est vide*/
     }
     for(i=0;i<strlen(mot);i++){
         if (isspace(mot[i])){
             j++;
         }
     }
-    if (j==strlen(mot)){/*si le mot contient autant d'espaces qu'il a de caractËre, il est vide*/
+    if (j==strlen(mot)){/*si le mot contient autant d'espaces qu'il a de caract√®re, il est vide*/
         return 0;
     }
     return 1;/*sinon c'est bon il est valide*/
@@ -707,11 +707,11 @@ int est_num(char *num){ /*Fonction faite par Remi JARA*/
         }
         else{
             if (num[i]==46){
-                ctrverif++;/* si on est ‡ l'emplacement d'un point, et que c'est bien un point, on incremente le commpteur de verification*/
+                ctrverif++;/* si on est √† l'emplacement d'un point, et que c'est bien un point, on incremente le commpteur de verification*/
             }
         }
     }
-    if (ctrverif==14 && strlen(num)==14){/*si on a incremente 14 fois (nombre de caractËre d'un numero, le numero est valide*/
+    if (ctrverif==14 && strlen(num)==14){/*si on a incremente 14 fois (nombre de caract√®re d'un numero, le numero est valide*/
         return 1;
     }
     else{
@@ -722,7 +722,7 @@ int est_num(char *num){ /*Fonction faite par Remi JARA*/
 int est_mail(char *mail){ /*Fonction faite par Remi JARA*/
     int i=0;/*fonction qui renvoit 1 si la valeur passe en argument est une adresse mail valide, 0 sinon*/
     int taille_mail = strlen(mail);
-    if (!(isalpha(mail[i]))){/*si le premier caractËre n'est pas une lettre, l'email n'est pas valide*/
+    if (!(isalpha(mail[i]))){/*si le premier caract√®re n'est pas une lettre, l'email n'est pas valide*/
         printf("\nEmail non valide\nNorme des adresses email : ---@---.---\n");
         return 0;
     }
@@ -739,7 +739,7 @@ int est_mail(char *mail){ /*Fonction faite par Remi JARA*/
         printf("\nEmail non valide\nNorme des adresses email : ---@---.---\n");
         return 0;
     }
-    if ((point >= (taille_mail - 1))){/*si le point est en derniËre position*/
+    if ((point >= (taille_mail - 1))){/*si le point est en derni√®re position*/
         printf("\nEmail non valide\nNorme des adresses email : ---@---.---\n");
         return 0;
     }
@@ -747,7 +747,7 @@ int est_mail(char *mail){ /*Fonction faite par Remi JARA*/
 }
 int est_code_postal(char *code_postale){ /*Fonction faite par Remi JARA*/
     int i,ctr=0;
-    for (i=0;i<strlen(code_postale);i++){/*on incremente le compteur si chaque caractËre du code postale est un chiffre*/
+    for (i=0;i<strlen(code_postale);i++){/*on incremente le compteur si chaque caract√®re du code postale est un chiffre*/
         if (isdigit(code_postale[i])){
             ctr++;
         }
@@ -760,23 +760,23 @@ int est_code_postal(char *code_postale){ /*Fonction faite par Remi JARA*/
 }
 int est_fichier(char fichier[]){/*Fonction faite par Remi JARA*/
     int i;
-    char *carac="<>:\"|?*\\/";/*on initialise une chaine contenant tout les caractËres interdit pour un nom de fichier par windows*/
+    char *carac="<>:\"|?*\\/";/*on initialise une chaine contenant tout les caract√®res interdit pour un nom de fichier par windows*/
     for(i=0;i<strlen(fichier);i++){
-        if (strchr(carac,fichier[i])!=NULL){/*si le nom du fichier contient l'un des caractËres, on arrÍte la boucle et on indique l'erreur*/
-            printf("Erreur dans la selection du nom du fichier\nLe nom ne peut pas contenir les caractËres suivants : / \\ : ? : | < > * \"\n");
+        if (strchr(carac,fichier[i])!=NULL){/*si le nom du fichier contient l'un des caract√®res, on arr√™te la boucle et on indique l'erreur*/
+            printf("Erreur dans la selection du nom du fichier\nLe nom ne peut pas contenir les caract√®res suivants : / \\ : ? : | < > * \"\n");
             return 0;
         }
     }
     return 1;
 }
 char *majuscule_nom(char *mot){/*Fonction faite par Idrissa SALL*/
-    mot[0] = toupper(mot[0]);/*on met en majuscule le premier caractËre du nom*/
+    mot[0] = toupper(mot[0]);/*on met en majuscule le premier caract√®re du nom*/
     return mot;
 }
 char *majuscule_adresse(char *mot){/*Fonction faite par Idrissa SALL*/
     int i;
     for(i=0;i<strlen(mot);i++){
-        mot[i]=toupper(mot[i]);/*on met en majuscule chaque caractËre de la chaine de l'adresse*/
+        mot[i]=toupper(mot[i]);/*on met en majuscule chaque caract√®re de la chaine de l'adresse*/
     }
     return mot;
 }
@@ -1041,7 +1041,7 @@ int strcmpr(char * ch1, char * ch2){/*Fonction faite par Idrissa SALL*//*fonctio
 
     int x=0 ,y=0;
     while(ch1[x] || ch2[y]){/*tant qu'une des deux chaines n'est pas vide on continue la comparaison*/
-        if(ch1[x] != ch2[y]){/*condition pour arreter la comparaison de caractere. si rien ne se passe c'est ‡ dire aucun arret,
+        if(ch1[x] != ch2[y]){/*condition pour arreter la comparaison de caractere. si rien ne se passe c'est √† dire aucun arret,
                 on retourne 0*/
             if(ch1[x] < ch2[y])/*par contre si ch1[x] < ch2[y] on retourne une valeur negative*/
                 return -9;
@@ -1063,7 +1063,7 @@ void commencant(char c[],int paramfiltre){/*Fonction faite par Idrissa SALL*//*r
     }
     t=strlen(c);
     int i=0;
-    switch(paramfiltre){/*selon les choix de filtre de l'utilisateur on cherche l‡ o˘ se trouve sa chaine de caractere*/
+    switch(paramfiltre){/*selon les choix de filtre de l'utilisateur on cherche l√† o√π se trouve sa chaine de caractere*/
         case 0:
             for(i=0; i< j; i++){
                 if(strnicmp(tableau[i].prenom,c,t)==0 && strcmp(tableau[i].prenom,"*Champ vide*")!=0){/*si on veut faire avec casse on peut utiliser strnicmp. sans casse on utilise ma fonction sntncmpr*/
@@ -1104,7 +1104,7 @@ void terminant(char c[],int paramfiltre){/*Fonction faite par Idrissa SALL*//*re
     }
     t=strlen(c);
     int i=0;
-    switch(paramfiltre){/*selon les choix de filtre de l'utilisateur on cherche l‡ o˘ se trouve sa chaine de caractere*/
+    switch(paramfiltre){/*selon les choix de filtre de l'utilisateur on cherche l√† o√π se trouve sa chaine de caractere*/
         case 0:
             for(i=0; i< j; i++){
                 if(strinvcmpr(tableau[i].prenom,c,t)==0&& strcmp(tableau[i].prenom,"*Champ vide*")!=0){/*si on veut faire avec casse on peut utiliser strinvcmpr. sans casse on utilise ma fonction sntncmpr*/
@@ -1181,7 +1181,7 @@ void recherche(char c[],int paramfiltre){/*Fonction faite par Idrissa SALL*//*re
     }
 }
 void exclu(char c[],int paramfiltre){/*Fonction faite par Idrissa SALL*//*exclure la chaine tapee*/
-    /*la fonction permet d'exclure le caractere  qu'on a passÈ en parametre*/
+    /*la fonction permet d'exclure le caractere  qu'on a pass√© en parametre*/
     int j;
     for (j=0;tableau[j].prenom!=NULL;){
         j++;                                /*boucle for permettant de trouver le nombre de client dans le tableau*/
@@ -1223,17 +1223,17 @@ void exclu(char c[],int paramfiltre){/*Fonction faite par Idrissa SALL*//*exclur
 }
 char* strcase( const char* chaine1, const char* chaine2 ){/*Fonction faite par Idrissa SALL*/
     const char *pt1 = chaine1 , *pt2 = chaine2 ;
-    const char *r = *pt2 == 0 ? chaine1 : 0 ;/*char* r est egal ch1 si (*pt2==0) sinon c'est egale ‡ 0*/
+    const char *r = *pt2 == 0 ? chaine1 : 0 ;/*char* r est egal ch1 si (*pt2==0) sinon c'est egale √† 0*/
 
     while( *pt1 != 0 && *pt2 != 0 ){
             /*tolower permet de convertir les majuscule en minuscule et se trouve dans <ctype.h>*/
         if( tolower( (unsigned char)*pt1 ) == tolower( (unsigned char)*pt2 ) ){
         /*on entre dans le if lorsque pt1 et pt2 sont egaux en minuscle*/
-            if( r == 0 )/*lorsque r n'est pas egale ‡ ch1*/
+            if( r == 0 )/*lorsque r n'est pas egale √† ch1*/
                 r = pt1 ;/*on l'affecte pt1 et puis on incremente pt2*/
             pt2++ ;
         }
-        else{/*dans le cas o˘ pt1 n'est pas egal en pt2 apres conversion en minuscle*/
+        else{/*dans le cas o√π pt1 n'est pas egal en pt2 apres conversion en minuscle*/
             pt2 = chaine2 ;
             if( r != 0 )
                 pt1 = r + 1 ;
@@ -1249,12 +1249,12 @@ char* strcase( const char* chaine1, const char* chaine2 ){/*Fonction faite par I
     return *pt2 == 0 ? (char*)r : 0 ;
 }
 int strncmpr(char * ch1, char * ch2, int taille){/*Fonction faite par Idrissa SALL*//*fonction pour comparer deux chaines avec de nombre de car en parametre*/
-    /*fonction similaire ‡ stricmp dans la bibliotheque string.h*/
+    /*fonction similaire √† stricmp dans la bibliotheque string.h*/
     int x=0 ,y=0,i=0;
     if (taille==0)/*pas necessaire le code marche sans mais il faut laisser comme ca*/
         return 0;
     while(i<taille){
-        if(ch1[x] != ch2[y]){/*condition d'arret de la comparaison et retourne une valeur differente de 0 selon quelle chaine est superieur ‡ l'autre*/
+        if(ch1[x] != ch2[y]){/*condition d'arret de la comparaison et retourne une valeur differente de 0 selon quelle chaine est superieur √† l'autre*/
             if(ch1[x] < ch2[y])
                 return -9;
             if(ch1[x] > ch2[y])
@@ -1267,7 +1267,7 @@ int strncmpr(char * ch1, char * ch2, int taille){/*Fonction faite par Idrissa SA
     return 0;
 }
 int strinvcmpr(char * ch1, char * ch2, int taille){/*Fonction faite par Idrissa SALL*//*fonction pour comparer deux chaines avec de nombre de carac en parametre depuis la fin de chaine*/
-    /*une fontion similaire ‡ strncmpr sauf que celle ci compare les fin de caractere de la chaine*/
+    /*une fontion similaire √† strncmpr sauf que celle ci compare les fin de caractere de la chaine*/
     int x=0 ,y=0,i=0;
     x=strlen(ch1)-1;
     y=strlen(ch2)-1;
@@ -1292,18 +1292,18 @@ void sauvegarder(){/*Fonction faite par Remi JARA*/
     do{
     printf("Comment voulez-vous sauvegarder les modifications ?\n  - Dans un nouveau fichier --> tapez \"1\"\n  - En ecrasant le fichier actuel --> tapez \"0\"\n");
     scanf("%s",choixsauv);
-    }while(!(est_zero_ou_un(choixsauv)));/*on choisit le type de modification avec vÈrification*/
+    }while(!(est_zero_ou_un(choixsauv)));/*on choisit le type de modification avec v√©rification*/
     choix = atoi(choixsauv);
     int i=0;
     if(choix==0){/*modification avec suppression du fichier actuel*/
         FILE *fichiersauv= fopen(nouveau_chemin,"a+");
         if (fichiersauv == NULL)
         {
-            printf("Erreur de lecture du fichier\n"); /*verification qu'il n'y a aucune erreur avec le fichier crÈÈ*/
+            printf("Erreur de lecture du fichier\n"); /*verification qu'il n'y a aucune erreur avec le fichier cr√©√©*/
             exit(EXIT_FAILURE);
         }
         while (tableau[i].prenom!=NULL){/*on parcours chaque client*/
-            if (strcmp(tableau[i].suppr,"suppr")!=0){/*si le client a ÈtÈ supprimÈ on ne l'Ècrit pas dans le fichier csv*/
+            if (strcmp(tableau[i].suppr,"suppr")!=0){/*si le client a √©t√© supprim√© on ne l'√©crit pas dans le fichier csv*/
                 fprintf(fichiersauv,"%s,%s,%s,%s,%s,%s,%s\n",strcmp(tableau[i].prenom,"*Champ vide*")==0 ? "" : tableau[i].prenom,
                                                             strcmp(tableau[i].nom,"*Champ vide*")==0 ? "" : tableau[i].nom,
                                                             strcmp(tableau[i].adresse,"*Champ vide*")==0 ? "" : tableau[i].adresse,
@@ -1323,7 +1323,7 @@ void sauvegarder(){/*Fonction faite par Remi JARA*/
         do{
             if (strcmp(nomfichier,"vide")!=0)printf("Choisissez un nom de fichier : ");
             fgets(nomfichier,200,stdin);
-        }while(!(est_vide(nomfichier)&&est_fichier(nomfichier)));/*vÈrification du nom du fichier*/
+        }while(!(est_vide(nomfichier)&&est_fichier(nomfichier)));/*v√©rification du nom du fichier*/
         for (i=0;nomfichier[i]!='\n';){
             i++;
         }
@@ -1337,7 +1337,7 @@ void sauvegarder(){/*Fonction faite par Remi JARA*/
         }
         i=0;
         while (tableau[i].prenom!=NULL){
-            if (strcmp(tableau[i].suppr,"suppr")!=0){/*si le client a ÈtÈ supprimÈ on ne l'Ècrit pas dans le fichier csv*/
+            if (strcmp(tableau[i].suppr,"suppr")!=0){/*si le client a √©t√© supprim√© on ne l'√©crit pas dans le fichier csv*/
                 fprintf(fichiersauv,"%s,%s,%s,%s,%s,%s,%s\n",strcmp(tableau[i].prenom,"*Champ vide*")==0 ? "" : tableau[i].prenom,
                                                             strcmp(tableau[i].nom,"*Champ vide*")==0 ? "" : tableau[i].nom,
                                                             strcmp(tableau[i].adresse,"*Champ vide*")==0 ? "" : tableau[i].adresse,
@@ -1377,3 +1377,4 @@ void menu(){ /*Fonction faite par Remi JARA */
         }
     }while(strcmpi(choix,"stop")!=0);
 }
+/*norme c90*/
