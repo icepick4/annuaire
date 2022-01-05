@@ -12,13 +12,13 @@
 	<string.h>
 	"fonction.h"
 
-1639040482 g:\mon drive\cours\c\sae-c\fonction.h
+1641393521 g:\mon drive\cours\c\sae-c\fonction.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 
-1639143186 source:g:\mon drive\cours\c\sae-c\fonction.c
+1641393433 source:g:\mon drive\cours\c\sae-c\fonction.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -26,6 +26,25 @@
 	<ctype.h>
 
 1638350398 g:\mon drive\cours\c\sae-c\idrissa.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"fonction.h"
+	<ctype.h>
+
+1639039422 source:c:\users\remi\google drive\cours\c\sae-c\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"fonction.h"
+
+1639040492 c:\users\remi\google drive\cours\c\sae-c\fonction.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
+1640001347 source:c:\users\remi\google drive\cours\c\sae-c\fonction.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
