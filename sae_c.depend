@@ -2,43 +2,67 @@
 1636533305 source:c:\users\nabil\onedrive\bureau\cours\langage c\sae c\sae c\main.c
 	<stdio.h>
 
-1637263784 source:c:\users\nabil\onedrive\bureau\cours\langage c\sae c\sae-c\main.c
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	"fonction.c"
-
-1637263887 c:\users\nabil\onedrive\bureau\cours\langage c\sae c\sae-c\fonction.c
+1641397123 source:c:\users\nabil\onedrive\bureau\cours\langage c\sae c\sae-c\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"fonction.h"
 
-1637700656 c:\users\nabil\onedrive\bureau\cours\langage c\sae c\sae-c\fonction.h
+1639039413 source:g:\mon drive\cours\c\sae-c\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"fonction.h"
 
-1637738852 source:c:\users\nabil\onedrive\bureau\cours\langage c\sae c\sae-c\fonction.c
+1641393521 g:\mon drive\cours\c\sae-c\fonction.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
+1641393433 source:g:\mon drive\cours\c\sae-c\fonction.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"fonction.h"
 	<ctype.h>
 
-1637750514 source:g:\mon drive\cours\c\sae-c\main.c
+1638350398 g:\mon drive\cours\c\sae-c\idrissa.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"fonction.h"
+	<ctype.h>
+
+1639039422 source:c:\users\remi\google drive\cours\c\sae-c\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"fonction.h"
 
-1637748350 g:\mon drive\cours\c\sae-c\fonction.h
+1639040492 c:\users\remi\google drive\cours\c\sae-c\fonction.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 
-1637749108 source:g:\mon drive\cours\c\sae-c\fonction.c
+1640001347 source:c:\users\remi\google drive\cours\c\sae-c\fonction.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"fonction.h"
+	<ctype.h>
+
+1641398804 source:c:\users\nabil\onedrive\bureau\cours\langage c\sae c\sae-c\fonction.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"fonction.h"
+	<ctype.h>
+
+1641395732 c:\users\nabil\onedrive\bureau\cours\langage c\sae c\sae-c\fonction.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
 	<ctype.h>
 
