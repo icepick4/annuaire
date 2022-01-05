@@ -98,7 +98,7 @@ void remplir(int modifier, int supprimer,sclient *client){ /*Fonction faite par 
         fclose(fichier);/*on ferme notre fichier il est desormais rempli*/
     }
 }
-char *copie(char *str){
+char *copie(char *str){/*Fonction trouvé sur internet, implémentation de la fonction strdup*/
     int len_str = strlen(str) + 1;
     char *copie = malloc(len_str);
     if(copie)
@@ -683,14 +683,14 @@ int est_vide (char *mot){/*Fonction faite par Remi JARA*/
     }
     return 1;/*sinon c'est bon il est valide*/
 }
-int est_zero_ou_un(char *choix){/*Fonction faite par Remi JARA*//*fonction qui renvoit 1 si la valeur passe en argument est un 0 ou un 1, renvoit 0 sinon*/
+int est_zero_ou_un(char *choix){/*Fonction faite par Idrissa SALL*//*fonction qui renvoit 1 si la valeur passe en argument est un 0 ou un 1, renvoit 0 sinon*/
     if (strcmp(choix,"0")==0 || strcmp(choix,"1")==0 ){
         return 1;/*si le choix est soit un 1 soit un 2, c'est valide, sinon non*/
     }
     printf("\nErreur dans la selection\n");
     return 0;
 }
-int est_choix_filtre(char *choix){/*Fonction faite par Remi JARA*//*fonction qui renvoit 1 si la valeur passe en argument est un 0, 1, 2 ou 3 renvoit 0 sinon*/
+int est_choix_filtre(char *choix){/*Fonction faite par Idrissa SALL*//*fonction qui renvoit 1 si la valeur passe en argument est un 0, 1, 2 ou 3 renvoit 0 sinon*/
     if (strcmp(choix,"0")==0 || strcmp(choix,"1")==0 || strcmp(choix,"2")==0 || strcmp(choix,"3")==0 ){
         return 1;/*si le choix est entre 0 et 3 compris, c'est valide, sinon non*/
     }
@@ -769,11 +769,11 @@ int est_fichier(char fichier[]){/*Fonction faite par Remi JARA*/
     }
     return 1;
 }
-char *majuscule_nom(char *mot){/*Fonction faite par Remi JARA*/
+char *majuscule_nom(char *mot){/*Fonction faite par Idrissa SALL*/
     mot[0] = toupper(mot[0]);/*on met en majuscule le premier caractère du nom*/
     return mot;
 }
-char *majuscule_adresse(char *mot){/*Fonction faite par Remi JARA*/
+char *majuscule_adresse(char *mot){/*Fonction faite par Idrissa SALL*/
     int i;
     for(i=0;i<strlen(mot);i++){
         mot[i]=toupper(mot[i]);/*on met en majuscule chaque caractère de la chaine de l'adresse*/
