@@ -418,7 +418,6 @@ void afficher(){ /*Fonction faite par Remi JARA*/
         printf("%s",choix_affiche);
         for (i=0;i<j;i++) /*boucle allant de i valant 0 à j vallant le nombre de client dans le tableau*/
         {
-
             if (strcmpi(choix_affiche,"manquant")!=0){
                 afficher_client(tableau,i);
             }
@@ -1297,6 +1296,7 @@ void sauvegarder(){/*Fonction faite par Remi JARA*/
     int i=0;
     if(choix==0){/*modification avec suppression du fichier actuel*/
         FILE *fichiersauv= fopen(nouveau_chemin,"a+");
+        printf("bingo");
         if (fichiersauv == NULL)
         {
             printf("Erreur de lecture du fichier\n"); /*verification qu'il n'y a aucune erreur avec le fichier créé*/
@@ -1311,9 +1311,12 @@ void sauvegarder(){/*Fonction faite par Remi JARA*/
                                                             strcmp(tableau[i].num,"*Champ vide*")==0 ? "" : tableau[i].num,
                                                             strcmp(tableau[i].mail,"*Champ vide*")==0 ? "" : tableau[i].mail,
                                                             strcmp(tableau[i].profession,"*Champ vide*")==0 ? "" : tableau[i].profession);
-                i++;
+
             }
+            i++;
+            printf("%d",i);
         }
+        printf("bingofin");
         fclose(fichiersauv);
         remove(chemin);/*on ferme le nouveau fichier, supprime l'ancien et renomme le nouveau avec le nom d'origine*/
         rename(nouveau_chemin, chemin);
